@@ -165,7 +165,7 @@ static Key keys[] = {
 	{ MODKEY,						XK_a,	   spawn,		   SHCMD("xfce4-screenshooter -rc") },
 	{ MODKEY|ShiftMask,				XK_a,	   spawn,		   SHCMD("xfce4-screenshooter -rs ~/Pictures/screenshots/sc_$(date +%s).jpg") },
 	{ MODKEY,						XK_space,  spawn,		   SHCMD("j4-dmenu-desktop  --display-binary --dmenu=\"dmenu -i -p Launch: -l 15\"") },
-	{ MODKEY|ControlMask|ShiftMask, XK_p,      spawn,		   SHCMD("powermenu") },
+	{ MODKEY|ControlMask|ShiftMask, XK_p,      spawn,		   SHCMD("dm-power") },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
 };
 
