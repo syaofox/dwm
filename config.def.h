@@ -34,6 +34,9 @@ static const Rule rules[] = {
 	{ "Gnome-calculator",  				NULL,       NULL,      	0,       		1,           -1 },	
 	{ "Blueberry.py",  					NULL,       NULL,      	0,       		1,           -1 },	
 	{ "Ristretto",  					NULL,       NULL,      	0,       		1,           -1 },
+	{ "Nm-connection-editor",  			NULL,       NULL,      	0,       		1,           -1 },
+	{ "Baobab",  						NULL,       NULL,      	0,       		1,           -1 },
+	{ "Gnome-calendar",  				NULL,       NULL,      	0,       		1,           -1 },
 	
 	{ "Thunderbird",  					NULL,       NULL,       1 << 7,      	0,           -1 },
 	{ "TelegramDesktop",  				NULL,       NULL,       1 << 7,       	0,           -1 },
