@@ -26,25 +26,27 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Lxappearance",  					NULL,       NULL,       0,       		1,           -1 },
-	{ "Pavucontrol",  					NULL,       NULL,       0,       		1,           -1 },
-	{ "Toolkit",  						NULL,       NULL,       0,       		1,           -1 },
-	{ "Xfce4-power-manager-settings",  	NULL,       NULL,       0,       		1,           -1 },
-	{ "Gnome-calculator",  				NULL,       NULL,      	0,       		1,           -1 },	
-	{ "Blueberry.py",  					NULL,       NULL,      	0,       		1,           -1 },	
-	{ "Ristretto",  					NULL,       NULL,      	0,       		1,           -1 },
-	{ "Nm-connection-editor",  			NULL,       NULL,      	0,       		1,           -1 },
-	{ "Baobab",  						NULL,       NULL,      	0,       		1,           -1 },
-	{ "Gnome-calendar",  				NULL,       NULL,      	0,       		1,           -1 },
+	/* class      						instance    title       tags mask     	iscentered   	isfloating   monitor */
+	{ "Lxappearance",  					NULL,       NULL,       0,       		1,				1,           -1 },
+	{ "Pavucontrol",  					NULL,       NULL,       0,       		1,				1,           -1 },
+	{ "Toolkit",  						NULL,       NULL,       0,       		1,				1,           -1 },
+	{ "Xfce4-power-manager-settings",  	NULL,       NULL,       0,       		1,				1,           -1 },
+	{ "Gnome-calculator",  				NULL,       NULL,      	0,       		1,				1,           -1 },	
+	{ "Blueberry.py",  					NULL,       NULL,      	0,       		1,				1,           -1 },	
+	{ "Ristretto",  					NULL,       NULL,      	0,       		1,				1,           -1 },
+	{ "Nm-connection-editor",  			NULL,       NULL,      	0,       		1,				1,           -1 },
+	{ "Baobab",  						NULL,       NULL,      	0,       		1,				1,           -1 },
+	{ "Gnome-calendar",  				NULL,       NULL,      	0,       		1,				1,           -1 },
+	{ "Gimp",     						NULL,       NULL,       0,            	1,				1,			 -1 },
 	
-	{ "Thunderbird",  					NULL,       NULL,       1 << 7,      	0,           -1 },
-	{ "TelegramDesktop",  				NULL,       NULL,       1 << 7,       	0,           -1 },
-	{ "Free Download Manager",  		NULL,       NULL,       1 << 6,       	0,           -1 },
-	{ "Virt-manager",  					NULL,       NULL,       1 << 8,       	0,           -1 },	
-	{ "Vmware",  						NULL,       NULL,       1 << 8,       	0,           -1 },	
-	{ "Ghb",  							NULL,       NULL,       1 << 4,       	0,           -1 },
+	{ "Thunderbird",  					NULL,       NULL,       1 << 7,      	0,				0,           -1 },
+	{ "TelegramDesktop",  				NULL,       NULL,       1 << 7,       	0,				0,           -1 },
+	{ "Free Download Manager",  		NULL,       NULL,       1 << 6,       	0,				0,           -1 },
+	{ "Virt-manager",  					NULL,       NULL,       1 << 8,       	0,				0,           -1 },	
+	{ "Vmware",  						NULL,       NULL,       1 << 8,       	0,				0,           -1 },	
+	{ "Ghb",  							NULL,       NULL,       1 << 4,       	0,				0,           -1 },
 };
+
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
