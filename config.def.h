@@ -81,6 +81,7 @@ static const Rule rules[] = {
 	{ "Baobab",  						NULL,       NULL,      	0,       		1,				1,           -1 },
 	{ "Gnome-calendar",  				NULL,       NULL,      	0,       		1,				1,           -1 },
 
+	{ "Gimp",     						NULL,       NULL,       0,            	1,				1,			 -1 },	
 	{ "Thunderbird",  					NULL,       NULL,       1 << 7,      	0,				0,           -1 },
 	{ "TelegramDesktop",  				NULL,       NULL,       1 << 7,       	0,				0,           -1 },
 	{ "Free Download Manager",  		NULL,       NULL,       1 << 6,       	0,				0,           -1 },
@@ -88,6 +89,7 @@ static const Rule rules[] = {
 	{ "Vmware",  						NULL,       NULL,       1 << 8,       	0,				0,           -1 },	
 	{ "Ghb",  							NULL,       NULL,       1 << 4,       	0,				0,           -1 },
 };
+
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
