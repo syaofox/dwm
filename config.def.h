@@ -83,8 +83,9 @@ static const Rule rules[] = {
 	{ "Nm-connection-editor",  			NULL,       NULL,      	0,       		1,				1,           -1 },
 	{ "Baobab",  						NULL,       NULL,      	0,       		1,				1,           -1 },
 	{ "Gnome-calendar",  				NULL,       NULL,      	0,       		1,				1,           -1 },
-
-	{ "Gimp",     						NULL,       NULL,       0,            	1,				1,			 -1 },	
+	{ "Gimp",     						NULL,       NULL,       0,            	1,				1,			 -1 },
+	{ "mpv",     						NULL,       NULL,       0,            	1,				1,			 -1 },
+	
 	{ "Thunderbird",  					NULL,       NULL,       1 << 7,      	0,				0,           -1 },
 	{ "TelegramDesktop",  				NULL,       NULL,       1 << 7,       	0,				0,           -1 },
 	{ "Free Download Manager",  		NULL,       NULL,       1 << 6,       	0,				0,           -1 },
