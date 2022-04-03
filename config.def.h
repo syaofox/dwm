@@ -85,6 +85,7 @@ static const Rule rules[] = {
 	{ "Gnome-calendar",  				NULL,       NULL,      	0,       		1,				1,           -1 },
 	{ "Gimp",     						NULL,       NULL,       0,            	1,				1,			 -1 },
 	{ "mpv",     						NULL,       NULL,       0,            	1,				1,			 -1 },
+	{ "Peazip",     					NULL,       NULL,       0,            	1,				1,			 -1 },
 	
 	{ "Thunderbird",  					NULL,       NULL,       1 << 7,      	0,				0,           -1 },
 	{ "TelegramDesktop",  				NULL,       NULL,       1 << 7,       	0,				0,           -1 },
