@@ -194,6 +194,7 @@ static void resizeclient(Client *c, int x, int y, int w, int h);
 static void resizemouse(const Arg *arg);
 static void restack(Monitor *m);
 static void run(void);
+static void runAutostart(void);
 static void scan(void);
 static int sendevent(Client *c, Atom proto);
 static void sendmon(Client *c, Monitor *m);
@@ -1698,6 +1699,28 @@ spawn(const Arg *arg)
 }
 
 void
+runAutostart(void)
+{
+	const char *const *p;
+	size_t i;
+
+	/* count entries */
+	for (i = 0; autostart[i]; i += 2)
+		;
+
+	/* launch them */
+	for (p = autostart; *p; p += 2) {
+		if (fork() == 0) {
+			setsid();
+			execvp(*p, (char *const *)p);
+			fprintf(stderr, "dwm: execvp %s\n", *p);
+			perror(" failed");
+			exit(EXIT_FAILURE);
+		}
+	}
+}
+
+void
 tag(const Arg *arg)
 {
 	if (selmon->sel && arg->ui & TAGMASK) {
@@ -2189,6 +2212,7 @@ main(int argc, char *argv[])
 		die("pledge");
 #endif /* __OpenBSD__ */
 	scan();
+	runAutostart();
 	run();
 	cleanup();
 	XCloseDisplay(dpy);

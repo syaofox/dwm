@@ -1,0 +1,83 @@
+From be1d2b1a9604a6695537bee687196db510e4e3d4 Mon Sep 17 00:00:00 2001
+From: syaofox <syaofox@gmail.com>
+Date: Tue, 21 Oct 2025 10:38:14 +0800
+Subject: [PATCH] =?UTF-8?q?=E8=87=AA=E5=8A=A8=E5=90=AF=E5=8A=A8=E8=A1=A5?=
+ =?UTF-8?q?=E4=B8=81?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ config.def.h |  6 ++++++
+ dwm.c        | 24 ++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
+
+diff --git a/config.def.h b/config.def.h
+index bfd22bc..2a5c4fc 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -79,6 +79,12 @@ static const char *screenshotcmd[] = { "/bin/sh", "-c", "maim -s | xclip -select
+ /* 或使用 scrot: 区域截图并保存，需要先安装: sudo apt install scrot */
+ /* static const char *screenshotcmd[] = { "scrot", "-s", "-e", "xclip -selection clipboard -t image/png < $f", NULL }; */
+ 
++/* autostart */
++static const char *const autostart[] = {
++	"slstatus", NULL,
++	NULL /* terminate */
++};
++
+ static const Key keys[] = {
+ 	/* modifier                     key        function        argument */
+ 	{ MODKEY,                       XK_space,   spawn,          {.v = dmenucmd } },
+diff --git a/dwm.c b/dwm.c
+index 3f431ae..d3ee304 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -201,6 +201,7 @@ static void resizeclient(Client *c, int x, int y, int w, int h);
+ static void resizemouse(const Arg *arg);
+ static void restack(Monitor *m);
+ static void run(void);
++static void runAutostart(void);
+ static void scan(void);
+ static int sendevent(Client *c, Atom proto);
+ static void sendmon(Client *c, Monitor *m);
+@@ -1749,6 +1750,28 @@ spawn(const Arg *arg)
+ 	}
+ }
+ 
++void
++runAutostart(void)
++{
++	const char *const *p;
++	size_t i;
++
++	/* count entries */
++	for (i = 0; autostart[i]; i += 2)
++		;
++
++	/* launch them */
++	for (p = autostart; *p; p += 2) {
++		if (fork() == 0) {
++			setsid();
++			execvp(*p, (char *const *)p);
++			fprintf(stderr, "dwm: execvp %s\n", *p);
++			perror(" failed");
++			exit(EXIT_FAILURE);
++		}
++	}
++}
++
+ void
+ tag(const Arg *arg)
+ {
+@@ -2213,6 +2236,7 @@ main(int argc, char *argv[])
+ 		die("pledge");
+ #endif /* __OpenBSD__ */
+ 	scan();
++	runAutostart();
+ 	run();
+ 	if(restart) execvp(argv[0], argv);
+ 	cleanup();
+-- 
+2.43.0
+
