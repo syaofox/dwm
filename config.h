@@ -24,20 +24,20 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "󰣭", "", "", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "Xviewer",  NULL,       NULL,       0,            1,           -1 },
-	{ "Gnome-calculator",     NULL,       NULL,       0,            1,           -1 },
-	{ "Cursor",   NULL,       NULL,       1 << 1,            1,           -1 },
-	{ "Brave-browser",   NULL,       NULL,       1 << 2,            1,           -1 },
+	/* class                instance    title       tags mask     isfloating   monitor */
+	{ "Gimp",               NULL,       NULL,       0,            1,           -1 },
+	{ "Firefox",            NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Xviewer",            NULL,       NULL,       0,            1,           -1 },
+	{ "Gnome-calculator",   NULL,       NULL,       0,            1,           -1 },
+	{ "Brave-browser",      NULL,       NULL,       1 << 0,       0,           -1 },
+	{ "Cursor",             NULL,       NULL,       1 << 1,       0,           -1 },
 };
 
 /* layout(s) */
@@ -69,7 +69,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "rofi", "-show", "drun", "-theme", "solarized",  "-show-icons", "-icon-theme", "Mint-Y", NULL };  /* 需要先安装 rofi */
+static const char *dmenucmd[] = { "rofi", "-show", "drun", "-theme", "solarized",  "-show-icons", "-icon-theme", "Mint-Y", "-font", "JetBrains Mono 10", NULL };  /* 需要先安装 rofi */
 static const char *termcmd[]  = { "alacritty", "-o", "window.opacity=0.9", NULL };
 static const char *nemocmd[]  = { "nemo", NULL };
 static const char *bravecmd[] = { "brave-browser", NULL };
