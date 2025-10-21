@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappih    = 4;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 2;       /* vert inner gap between windows */
@@ -67,7 +67,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "rofi", "-show", "drun", "-theme", "solarized", NULL };  /* 需要先安装 rofi */
+static const char *dmenucmd[] = { "rofi", "-show", "drun", "-theme", "solarized",  "-show-icons", "-icon-theme", "Mint-Y", NULL };  /* 需要先安装 rofi */
 static const char *termcmd[]  = { "alacritty", "-o", "window.opacity=0.9", NULL };
 static const char *nemocmd[]  = { "nemo", NULL };
 static const char *bravecmd[] = { "brave-browser", NULL };
@@ -86,7 +86,7 @@ static const char *const autostart[] = {
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = nemocmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = bravecmd } },
@@ -110,7 +110,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {0} },
-	{ MODKEY,                      XK_space,  togglefloating, {0} },
+	{ MODKEY,                       XK_p,  togglefloating, {0} },
 	// { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	// { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
