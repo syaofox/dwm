@@ -76,7 +76,7 @@ static const char *screenshotcmd[] = { "/bin/sh", "-c", "maim -s | xclip -select
 /* autostart */
 static const char *const autostart[] = {
 	"sh", "-c", "pgrep -x slstatus > /dev/null || slstatus", NULL,
-	"sh", "-c", "pgrep -x picom > /dev/null || picom -b --backend glx --vsync --opacity-rule '90:class_g=\"Alacritty\" && focused' --opacity-rule '85:class_g=\"Alacritty\" && !focused'", NULL,
+	"sh", "-c", "pgrep -x picom > /dev/null || picom -b --backend glx --vsync", NULL,
 	NULL /* terminate */
 };
 
