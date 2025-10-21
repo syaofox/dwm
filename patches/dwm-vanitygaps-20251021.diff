@@ -1,23 +1,23 @@
-From 9709d08daa290c8c7319571cd9e6ef4ec40e7683 Mon Sep 17 00:00:00 2001
-From: bakkeby <bakkeby@gmail.com>
-Date: Wed, 6 May 2020 17:21:25 +0200
-Subject: [PATCH] vanitygaps - adds gaps to layouts (simplified)
+From: syaofox
+Date: Mon, 21 Oct 2025
+Subject: [PATCH] vanitygaps - adds gaps to dwm windows
 
 This patch adds window gaps functionality to dwm, differentiating between 
 inner and outer gaps as well as horizontal and vertical gaps.
 
-This simplified version only includes the basic tile layout with gaps,
-and provides simple gap controls (increase/decrease all gaps, toggle, 
-and reset to defaults).
+This implementation includes the tile layout with gaps support and provides 
+simple gap controls (increase/decrease all gaps, toggle, and reset to defaults).
+
+Ref: dwm-vanitygaps-6.2-fox.diff
 ---
- config.def.h |  11 +++
- dwm.c        |  35 +---
- vanitygaps.c | 148 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 167 insertions(+), 28 deletions(-)
+ config.def.h |  11 ++++
+ dwm.c        |  35 +----------
+ vanitygaps.c | 149 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 163 insertions(+), 32 deletions(-)
  create mode 100644 vanitygaps.c
 
 diff --git a/config.def.h b/config.def.h
-index 1c0b587..a886863 100644
+index f7370be..b9879c6 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -3,6 +3,11 @@
@@ -31,22 +31,17 @@ index 1c0b587..a886863 100644
 +static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
  static const int showbar            = 1;        /* 0 means no bar */
  static const int topbar             = 1;        /* 0 means bottom bar */
- static const char *fonts[]          = { "monospace:size=10" };
-@@ -36,11 +41,13 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95]
- static const int nmaster     = 1;    /* number of clients in master area */
- static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+ static const char *wallpaper        = "~/Pictures/wallpaper/eva.jpg"; /* wallpaper path */
+@@ -39,6 +44,8 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
+ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+ static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
  
 +#include "vanitygaps.c"
 +
  static const Layout layouts[] = {
  	/* symbol     arrange function */
  	{ "[]=",      tile },    /* first entry is default */
- 	{ "[M]",      monocle },
-+	{ "><>",      NULL },    /* no layout function means floating behavior */
- };
- 
- /* key definitions */
-@@ -71,6 +73,10 @@ static Key keys[] = {
+@@ -80,6 +87,10 @@ static const Key keys[] = {
  	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
  	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
  	{ MODKEY,                       XK_Return, zoom,           {0} },
@@ -58,10 +53,10 @@ index 1c0b587..a886863 100644
  	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
  	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 diff --git a/dwm.c b/dwm.c
-index 4465af1..c3b2d82 100644
+index 4388e76..7104897 100644
 --- a/dwm.c
 +++ b/dwm.c
-@@ -119,6 +119,10 @@ struct Monitor {
+@@ -120,6 +120,10 @@ struct Monitor {
  	int by;               /* bar geometry */
  	int mx, my, mw, mh;   /* screen size */
  	int wx, wy, ww, wh;   /* window area  */
@@ -72,15 +67,7 @@ index 4465af1..c3b2d82 100644
  	unsigned int seltags;
  	unsigned int sellt;
  	unsigned int tagset[2];
-@@ -208,7 +212,6 @@ static void sigchld(int unused);
- static void spawn(const Arg *arg);
- static void tag(const Arg *arg);
- static void tagmon(const Arg *arg);
--static void tile(Monitor *);
- static void togglebar(const Arg *arg);
- static void togglefloating(const Arg *arg);
- static void toggletag(const Arg *arg);
-@@ -638,6 +641,10 @@ createmon(void)
+@@ -657,6 +661,10 @@ createmon(void)
  	m->nmaster = nmaster;
  	m->showbar = showbar;
  	m->topbar = topbar;
@@ -91,7 +78,7 @@ index 4465af1..c3b2d82 100644
  	m->lt[0] = &layouts[0];
  	m->lt[1] = &layouts[1 % LENGTH(layouts)];
  	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
-@@ -1670,32 +1677,6 @@ tagmon(const Arg *arg)
+@@ -1762,34 +1770,6 @@ tagmon(const Arg *arg)
  	sendmon(selmon->sel, dirtomon(arg->i));
  }
  
@@ -113,11 +100,13 @@ index 4465af1..c3b2d82 100644
 -		if (i < m->nmaster) {
 -			h = (m->wh - my) / (MIN(n, m->nmaster) - i);
 -			resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), 0);
--			my += HEIGHT(c);
+-			if (my + HEIGHT(c) < m->wh)
+-				my += HEIGHT(c);
 -		} else {
 -			h = (m->wh - ty) / (n - i);
 -			resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), 0);
--			ty += HEIGHT(c);
+-			if (ty + HEIGHT(c) < m->wh)
+-				ty += HEIGHT(c);
 -		}
 -}
 -
@@ -126,10 +115,10 @@ index 4465af1..c3b2d82 100644
  {
 diff --git a/vanitygaps.c b/vanitygaps.c
 new file mode 100644
-index 0000000..3f31593
+index 0000000..80e2a99
 --- /dev/null
 +++ b/vanitygaps.c
-@@ -0,0 +1,148 @@
+@@ -0,0 +1,149 @@
 +/* Key binding functions */
 +static void defaultgaps(const Arg *arg);
 +static void incrgaps(const Arg *arg);
@@ -277,7 +266,7 @@ index 0000000..3f31593
 +			sy += HEIGHT(c) + ih;
 +		}
 +}
-\ No newline at end of file
 -- 
-2.19.1
+2.45.2
+
 
