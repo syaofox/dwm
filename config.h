@@ -72,6 +72,8 @@ static const char *nemocmd[]  = { "nemo", NULL };
 static const char *bravecmd[] = { "brave-browser", NULL };
 /* 使用 maim: 区域截图并复制到剪贴板，需要先安装: sudo apt install maim slop xclip */
 static const char *screenshotcmd[] = { "/bin/sh", "-c", "maim -s | xclip -selection clipboard -t image/png", NULL };
+/* 电源菜单: 使用 rofi 显示 logout/reboot/shutdown 选项 */
+static const char *powermenucmd[] = { "/bin/sh", "-c", "CHOICE=$(printf 'logout\\nreboot\\nshutdown' | rofi -dmenu -i -p 'Power Menu:' -theme solarized) && case \"$CHOICE\" in shutdown) systemctl poweroff;; reboot) systemctl reboot;; logout) pkill dwm;; esac", NULL };
 
 /* autostart */
 static const char *const autostart[] = {
@@ -87,6 +89,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_e,      spawn,          {.v = nemocmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = bravecmd } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = screenshotcmd } },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = powermenucmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
