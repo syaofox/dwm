@@ -1,0 +1,99 @@
+From 175431f3b9f8d297affb63ae09e5bc2e1c9d234d Mon Sep 17 00:00:00 2001
+From: syaofox <syaofox@gmail.com>
+Date: Mon, 20 Oct 2025 20:57:53 +0800
+Subject: [PATCH] Add wallpaper support
+
+This patch adds automatic wallpaper setting functionality to dwm.
+It allows users to set a wallpaper path in config.def.h that will be
+automatically applied when dwm starts.
+
+Features:
+- Configurable wallpaper path in config.def.h
+- Supports ~ expansion for home directory
+- Tries feh first, falls back to xwallpaper
+- Non-blocking execution
+
+Dependencies:
+- feh (preferred) or xwallpaper
+
+Usage:
+Set the wallpaper path in config.def.h:
+    static const char *wallpaper = "~/Pictures/wallpaper/eva.jpg";
+
+---
+ config.def.h |  1 +
+ dwm.c        | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
+
+diff --git a/config.def.h b/config.def.h
+index 9efa774..1c0b588 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -5,6 +5,7 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
+ static const unsigned int snap      = 32;       /* snap pixel */
+ static const int showbar            = 1;        /* 0 means no bar */
+ static const int topbar             = 1;        /* 0 means bottom bar */
++static const char *wallpaper        = "~/Pictures/wallpaper/eva.jpg"; /* wallpaper path */
+ static const char *fonts[]          = { "monospace:size=10" };
+ static const char dmenufont[]       = "monospace:size=10";
+ static const char col_gray1[]       = "#222222";
+diff --git a/dwm.c b/dwm.c
+index e5efb6a..253ede7 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -21,6 +21,7 @@
+  * To understand everything else, start reading main().
+  */
+ #include <errno.h>
++#include <limits.h>
+ #include <locale.h>
+ #include <signal.h>
+ #include <stdarg.h>
+@@ -208,6 +209,7 @@ static void setlayout(const Arg *arg);
+ static void setmfact(const Arg *arg);
+ static void setup(void);
+ static void seturgent(Client *c, int urg);
++static void setwallpaper(void);
+ static void showhide(Client *c);
+ static void sigchld(int unused);
+ static void spawn(const Arg *arg);
+@@ -1562,6 +1564,36 @@ setup(void)
+ 	XSelectInput(dpy, root, wa.event_mask);
+ 	grabkeys();
+ 	focus(NULL);
++	setwallpaper();
++}
++
++void
++setwallpaper(void)
++{
++	char *home;
++	char wallpaper_path[PATH_MAX];
++	char cmd[PATH_MAX * 2 + 100];
++	int ret;
++	
++	/* Expand ~ to home directory */
++	if (wallpaper[0] == '~' && wallpaper[1] == '/') {
++		home = getenv("HOME");
++		if (home) {
++			snprintf(wallpaper_path, sizeof(wallpaper_path), "%s%s", home, wallpaper + 1);
++		} else {
++			snprintf(wallpaper_path, sizeof(wallpaper_path), "%s", wallpaper);
++		}
++	} else {
++		snprintf(wallpaper_path, sizeof(wallpaper_path), "%s", wallpaper);
++	}
++	
++	/* Try feh first, then xwallpaper as fallback */
++	snprintf(cmd, sizeof(cmd), "feh --bg-scale '%s' 2>/dev/null || xwallpaper --zoom '%s' 2>/dev/null &", 
++	         wallpaper_path, wallpaper_path);
++	
++	ret = system(cmd);
++	if (ret == -1)
++		fprintf(stderr, "dwm: failed to set wallpaper\n");
+ }
+ 
+ void
+-- 
+2.43.0
+
