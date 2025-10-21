@@ -21,6 +21,7 @@
  * To understand everything else, start reading main().
  */
 #include <errno.h>
+#include <limits.h>
 #include <locale.h>
 #include <signal.h>
 #include <stdarg.h>
@@ -203,6 +204,7 @@ static void setlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
+static void setwallpaper(void);
 static void showhide(Client *c);
 static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
@@ -1610,6 +1612,36 @@ setup(void)
 	XSelectInput(dpy, root, wa.event_mask);
 	grabkeys();
 	focus(NULL);
+	setwallpaper();
+}
+
+void
+setwallpaper(void)
+{
+	char *home;
+	char wallpaper_path[PATH_MAX];
+	char cmd[PATH_MAX * 2 + 100];
+	int ret;
+	
+	/* Expand ~ to home directory */
+	if (wallpaper[0] == '~' && wallpaper[1] == '/') {
+		home = getenv("HOME");
+		if (home) {
+			snprintf(wallpaper_path, sizeof(wallpaper_path), "%s%s", home, wallpaper + 1);
+		} else {
+			snprintf(wallpaper_path, sizeof(wallpaper_path), "%s", wallpaper);
+		}
+	} else {
+		snprintf(wallpaper_path, sizeof(wallpaper_path), "%s", wallpaper);
+	}
+	
+	/* Try feh first, then xwallpaper as fallback */
+	snprintf(cmd, sizeof(cmd), "feh --bg-scale '%s' 2>/dev/null || xwallpaper --zoom '%s' 2>/dev/null &", 
+	         wallpaper_path, wallpaper_path);
+	
+	ret = system(cmd);
+	if (ret == -1)
+		fprintf(stderr, "dwm: failed to set wallpaper\n");
 }
 
 void
