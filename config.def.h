@@ -109,7 +109,7 @@ static const Key keys[] = {
 	// { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	// { MODKEY,                       XK_c,      zoom,           {0} },
+	{ MODKEY,                       XK_s,      zoom,           {0} },
 	{ MODKEY,                       XK_u,      incrgaps,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_u,      incrgaps,       {.i = -1 } },
 	{ MODKEY,                       XK_0,      togglegaps,     {0} },
