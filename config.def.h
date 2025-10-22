@@ -76,8 +76,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "/bin/sh", "-c", "rofi -show drun -config $HOME/.dwm-mint/dotfiles/rofi.rasi", NULL };  /* 需要先安装 rofi */
-static const char *termcmd[]  = { "/bin/sh", "-c", "alacritty --config-file $HOME/.dwm-mint/dotfiles/alacritty.toml", NULL };
+static const char *dmenucmd[] = { "/bin/sh", "-c", "rofi -show drun -config $HOME/dwm-mint/dotfiles/rofi.rasi", NULL };  /* 需要先安装 rofi */
+static const char *termcmd[]  = { "/bin/sh", "-c", "alacritty --config-file $HOME/dwm-mint/dotfiles/alacritty.toml", NULL };
 static const char *nemocmd[]  = { "nemo", NULL };
 static const char *bravecmd[] = { "brave-browser", NULL };
 /* 使用 maim: 区域截图并复制到剪贴板，需要先安装: sudo apt install maim slop xclip */
