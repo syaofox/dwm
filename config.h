@@ -43,6 +43,8 @@ static const Rule rules[] = {
 	{ "Gnome-calculator",   NULL,       NULL,       0,            1,           -1 },
 	{ "Brave-browser",      NULL,       NULL,       1 << 0,       0,           -1 },
 	{ "Cursor",             NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "Nemo",               NULL,       NULL,       0,             1,           -1 },
+
 };
 
 /* layout(s) */
@@ -74,7 +76,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "rofi", "-show", "drun", "-theme", "solarized",  "-show-icons", "-icon-theme", "Mint-Y", "-font", "JetBrains Mono 10", NULL };  /* 需要先安装 rofi */
+static const char *dmenucmd[] = { "/bin/sh", "-c", "rofi -show drun -config $HOME/.dwm-mint/dotfiles/rofi.rasi", NULL };  /* 需要先安装 rofi */
 static const char *termcmd[]  = { "/bin/sh", "-c", "alacritty --config-file $HOME/.dwm-mint/dotfiles/alacritty.toml", NULL };
 static const char *nemocmd[]  = { "nemo", NULL };
 static const char *bravecmd[] = { "brave-browser", NULL };
