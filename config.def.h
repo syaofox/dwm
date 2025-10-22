@@ -86,6 +86,8 @@ static const char *screenshotcmd[] = { "/bin/sh", "-c", "maim -s | xclip -select
 static const char *powermenucmd[] = { "/bin/sh", "-c", "CHOICE=$(printf 'lock\\nlogout\\nreboot\\nshutdown' | awk 'NR==1{print \"lock\"} NR==2{print \"logout\"} NR==3{print \"reboot\"} NR==4{print \"shutdown\"}'); CHOICE=$(printf 'lock\\nlogout\\nreboot\\nshutdown' | rofi -dmenu -i -p 'Power Menu:' -theme solarized); case \"$CHOICE\" in lock) slock;; logout) pkill dwm;; reboot) systemctl reboot;; shutdown) systemctl poweroff;; esac", NULL };
 /* lock */
 static const char *lockcmd[] = { "slock", NULL };
+/* clipboard manager */
+static const char *clipmancmd[] = { "xfce4-popup-clipman", NULL };
 
 /* autostart */
 static const char *const autostart[] = {
@@ -101,6 +103,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_e,      spawn,          {.v = nemocmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = bravecmd } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = screenshotcmd } },
+	{ MODKEY,                       XK_v,      spawn,          {.v = clipmancmd } },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = powermenucmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
