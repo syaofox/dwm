@@ -87,7 +87,7 @@ static const char *powermenucmd[] = { "/bin/sh", "-c", "CHOICE=$(printf 'logout\
 
 /* autostart */
 static const char *const autostart[] = {
-	"sh", "-c", "$HOME/.dwm-mint/dotfiles/autostart.sh", NULL,
+	"sh", "-c", "$HOME/dwm-mint/dotfiles/autostart.sh", NULL,
 	NULL /* terminate */
 };
 
