@@ -83,6 +83,8 @@ static const char *const autostart[] = {
 	"sh", "-c", "pgrep -x slstatus > /dev/null || slstatus", NULL,
 	"sh", "-c", "pgrep -x picom > /dev/null || picom -b --backend glx --vsync", NULL,
 	"sh", "-c", "feh --bg-scale ~/.dwm-mint/dwm/eva.jpg 2>/dev/null", NULL,
+	"sh", "-c", "pgrep -x csd-xsettings > /dev/null || /usr/bin/csd-xsettings &", NULL,
+	"sh", "-c", "pgrep -x csd-cursor > /dev/null || /usr/bin/csd-cursor &", NULL,
 	NULL /* terminate */
 };
 
