@@ -48,7 +48,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.75; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -83,7 +83,9 @@ static const char *bravecmd[] = { "brave-browser", NULL };
 /* 使用 maim: 区域截图并复制到剪贴板，需要先安装: sudo apt install maim slop xclip */
 static const char *screenshotcmd[] = { "/bin/sh", "-c", "maim -s | xclip -selection clipboard -t image/png", NULL };
 /* 电源菜单: 使用 rofi 显示 logout/reboot/shutdown 选项 */
-static const char *powermenucmd[] = { "/bin/sh", "-c", "CHOICE=$(printf 'logout\\nreboot\\nshutdown' | rofi -dmenu -i -p 'Power Menu:' -theme solarized) && case \"$CHOICE\" in shutdown) systemctl poweroff;; reboot) systemctl reboot;; logout) pkill dwm;; esac", NULL };
+static const char *powermenucmd[] = { "/bin/sh", "-c", "CHOICE=$(printf 'lock\\nlogout\\nreboot\\nshutdown' | awk 'NR==1{print \"lock\"} NR==2{print \"logout\"} NR==3{print \"reboot\"} NR==4{print \"shutdown\"}'); CHOICE=$(printf 'lock\\nlogout\\nreboot\\nshutdown' | rofi -dmenu -i -p 'Power Menu:' -theme solarized); case \"$CHOICE\" in lock) slock;; logout) pkill dwm;; reboot) systemctl reboot;; shutdown) systemctl poweroff;; esac", NULL };
+/* lock */
+static const char *lockcmd[] = { "slock", NULL };
 
 /* autostart */
 static const char *const autostart[] = {
@@ -93,6 +95,7 @@ static const char *const autostart[] = {
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = nemocmd } },
