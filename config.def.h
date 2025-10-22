@@ -15,8 +15,8 @@ static const unsigned int gappov    = 2;       /* vert outer gap between windows
 static       int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "JetBrains Mono:style=Regular:size=12" };
-static const char dmenufont[]       = "JetBrains Mono:style=Regular:size=12";
+static const char *fonts[]          = { "JetBrains Mono Nerd Font:style=Regular:size=12:antialias=true:autohint=true" };
+static const char dmenufont[]       = "JetBrains Mono Nerd Font:style=Regular:size=12:antialias=true:autohint=true";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -43,7 +43,6 @@ static const Rule rules[] = {
 	{ "Gnome-calculator",   NULL,       NULL,       0,            1,           -1 },
 	{ "Brave-browser",      NULL,       NULL,       1 << 0,       0,           -1 },
 	{ "Cursor",             NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "Nemo",               NULL,       NULL,       0             1,           -1 },
 };
 
 /* layout(s) */
@@ -76,7 +75,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "rofi", "-show", "drun", "-theme", "solarized",  "-show-icons", "-icon-theme", "Mint-Y", "-font", "JetBrains Mono 10", NULL };  /* 需要先安装 rofi */
-static const char *termcmd[]  = { "alacritty", "-o", "window.opacity=0.9", NULL };
+static const char *termcmd[]  = { "/bin/sh", "-c", "alacritty --config-file $HOME/.dwm-mint/dotfiles/alacritty.toml", NULL };
 static const char *nemocmd[]  = { "nemo", NULL };
 static const char *bravecmd[] = { "brave-browser", NULL };
 /* 使用 maim: 区域截图并复制到剪贴板，需要先安装: sudo apt install maim slop xclip */
@@ -86,11 +85,7 @@ static const char *powermenucmd[] = { "/bin/sh", "-c", "CHOICE=$(printf 'logout\
 
 /* autostart */
 static const char *const autostart[] = {
-	"sh", "-c", "pgrep -x slstatus > /dev/null || slstatus", NULL,
-	"sh", "-c", "pgrep -x picom > /dev/null || picom -b --backend glx --vsync", NULL,
-	"sh", "-c", "feh --bg-scale ~/.dwm-mint/dwm/eva.jpg 2>/dev/null", NULL,
-	"sh", "-c", "pgrep -x csd-xsettings > /dev/null || /usr/bin/csd-xsettings &", NULL,
-	"sh", "-c", "pgrep -x csd-cursor > /dev/null || /usr/bin/csd-cursor &", NULL,
+	"sh", "-c", "$HOME/.dwm-mint/dotfiles/autostart.sh", NULL,
 	NULL /* terminate */
 };
 
