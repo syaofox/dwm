@@ -43,6 +43,7 @@ static const Rule rules[] = {
 	{ "Gnome-calculator",   NULL,       NULL,       0,            1,           -1 },
 	{ "Brave-browser",      NULL,       NULL,       1 << 0,       0,           -1 },
 	{ "Cursor",             NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "Nemo",               NULL,       NULL,       0             1,           -1 },
 };
 
 /* layout(s) */
