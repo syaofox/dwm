@@ -1,0 +1,20 @@
+# Build artifacts
+*.o
+dwm
+
+# Auto-generated config (copied from config.def.h on first build)
+config.h
+
+# Release tarball
+*.tar.gz
+
+# Editor/IDE
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

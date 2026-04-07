@@ -129,6 +129,10 @@ struct Monitor {
 	Monitor *next;
 	Window barwin;
 	const Layout *lt[2];
+	int gappih;           /* horizontal inner gap */
+	int gappiv;           /* vertical inner gap */
+	int gappoh;           /* horizontal outer gap */
+	int gappov;           /* vertical outer gap */
 };
 
 typedef struct {
@@ -208,6 +212,9 @@ static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
+static void togglegaps(const Arg *arg);
+static void defaultgaps(const Arg *arg);
+static void incrgaps(const Arg *arg);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
 static void toggletag(const Arg *arg);
@@ -266,6 +273,7 @@ static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
 static Window root, wmcheckwin;
+static int enablegaps = 1;
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
@@ -640,6 +648,10 @@ createmon(void)
 	m->nmaster = nmaster;
 	m->showbar = showbar;
 	m->topbar = topbar;
+	m->gappih = gappih;
+	m->gappiv = gappiv;
+	m->gappoh = gappoh;
+	m->gappov = gappov;
 	m->lt[0] = &layouts[0];
 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
@@ -1685,30 +1697,122 @@ tagmon(const Arg *arg)
 }
 
 void
-tile(Monitor *m)
+setgaps(int oh, int ov, int ih, int iv)
 {
-	unsigned int i, n, h, mw, my, ty;
+	if (oh < 0) oh = 0;
+	if (ov < 0) ov = 0;
+	if (ih < 0) ih = 0;
+	if (iv < 0) iv = 0;
+
+	selmon->gappoh = oh;
+	selmon->gappov = ov;
+	selmon->gappih = ih;
+	selmon->gappiv = iv;
+	arrange(selmon);
+}
+
+void
+togglegaps(const Arg *arg)
+{
+	enablegaps = !enablegaps;
+	arrange(NULL);
+}
+
+void
+defaultgaps(const Arg *arg)
+{
+	setgaps(gappoh, gappov, gappih, gappiv);
+}
+
+void
+incrgaps(const Arg *arg)
+{
+	setgaps(
+		selmon->gappoh + arg->i,
+		selmon->gappov + arg->i,
+		selmon->gappih + arg->i,
+		selmon->gappiv + arg->i
+	);
+}
+
+void
+getgaps(Monitor *m, int *oh, int *ov, int *ih, int *iv, unsigned int *nc)
+{
+	unsigned int n, oe, ie;
+	Client *c;
+
+	oe = ie = enablegaps;
+	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+	if (smartgaps && n == 1)
+		oe = 0;
+
+	*oh = m->gappoh * oe;
+	*ov = m->gappov * oe;
+	*ih = m->gappih * ie;
+	*iv = m->gappiv * ie;
+	*nc = n;
+}
+
+void
+getfacts(Monitor *m, int msize, int ssize, float *mf, float *sf, int *mr, int *sr)
+{
+	unsigned int n;
+	float mfacts, sfacts;
+	int mtotal = 0, stotal = 0;
 	Client *c;
 
 	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+	mfacts = MIN(n, m->nmaster);
+	sfacts = n - m->nmaster;
+
+	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++)
+		if (n < m->nmaster)
+			mtotal += msize / mfacts;
+		else
+			stotal += ssize / sfacts;
+
+	*mf = mfacts;
+	*sf = sfacts;
+	*mr = msize - mtotal;
+	*sr = ssize - stotal;
+}
+
+void
+tile(Monitor *m)
+{
+	unsigned int i, n;
+	int oh, ov, ih, iv;
+	int mx = 0, my = 0, mh = 0, mw = 0;
+	int sx = 0, sy = 0, sh = 0, sw = 0;
+	float mfacts, sfacts;
+	int mrest, srest;
+	Client *c;
+
+	getgaps(m, &oh, &ov, &ih, &iv, &n);
 	if (n == 0)
 		return;
 
-	if (n > m->nmaster)
-		mw = m->nmaster ? m->ww * m->mfact : 0;
-	else
-		mw = m->ww;
-	for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+	sx = mx = m->wx + ov;
+	sy = my = m->wy + oh;
+	mh = m->wh - 2*oh - ih * (MIN(n, m->nmaster) - 1);
+	sh = m->wh - 2*oh - ih * (n - m->nmaster - 1);
+	sw = mw = m->ww - 2*ov;
+
+	if (m->nmaster && n > m->nmaster) {
+		sw = (mw - iv) * (1 - m->mfact);
+		mw = mw - iv - sw;
+		sx = mx + mw + iv;
+	}
+
+	getfacts(m, mh, sh, &mfacts, &sfacts, &mrest, &srest);
+
+	for (i = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
 		if (i < m->nmaster) {
-			h = (m->wh - my) / (MIN(n, m->nmaster) - i);
-			resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), 0);
-			if (my + HEIGHT(c) < m->wh)
-				my += HEIGHT(c);
+			resize(c, mx, my, mw - (2*c->bw), (mh / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), 0);
+			my += HEIGHT(c) + ih;
 		} else {
-			h = (m->wh - ty) / (n - i);
-			resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), 0);
-			if (ty + HEIGHT(c) < m->wh)
-				ty += HEIGHT(c);
+			resize(c, sx, sy, sw - (2*c->bw), (sh / sfacts) + ((i - m->nmaster) < srest ? 1 : 0) - (2*c->bw), 0);
+			sy += HEIGHT(c) + ih;
 		}
 }
 

@@ -3,6 +3,11 @@
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int gappih    = 6;        /* horizontal inner gap */
+static const unsigned int gappiv    = 4;        /* vertical inner gap */
+static const unsigned int gappoh    = 4;        /* horizontal outer gap */
+static const unsigned int gappov    = 4;        /* vertical outer gap */
+static const int smartgaps          = 0;        /* 1 means no outer gap when 1 client */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=10" };
@@ -86,6 +91,10 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_equal,  incrgaps,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_equal,  incrgaps,       {.i = -1 } },
+	{ MODKEY,                       XK_g,      togglegaps,     {0} },
+	{ MODKEY|ShiftMask,             XK_g,      defaultgaps,    {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
