@@ -157,6 +157,8 @@ typedef struct {
 	const char *title;
 	unsigned int tags;
 	int isfloating;
+	int iscentered;
+	int isalwaysontop;
 	int monitor;
 } Rule;
 
@@ -329,6 +331,8 @@ applyrules(Client *c)
 
 	/* rule matching */
 	c->isfloating = 0;
+	c->iscentered = 0;
+	c->isalwaysontop = 0;
 	c->tags = 0;
 	XGetClassHint(dpy, c->win, &ch);
 	class    = ch.res_class ? ch.res_class : broken;
@@ -341,6 +345,8 @@ applyrules(Client *c)
 		&& (!r->instance || strstr(instance, r->instance)))
 		{
 			c->isfloating = r->isfloating;
+			c->iscentered = r->iscentered;
+			c->isalwaysontop = r->isalwaysontop;
 			c->tags |= r->tags;
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
@@ -1220,6 +1226,10 @@ manage(Window w, XWindowAttributes *wa)
 	updatewindowtype(c);
 	updatesizehints(c);
 	updatewmhints(c);
+	if(c->iscentered) {
+		c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
+		c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
+	}
 	XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
 	grabbuttons(c, 0);
 	if (!c->isfloating)
