@@ -2,6 +2,10 @@
 *.o
 dwm
 
+# Patch reject files
+*.rej
+*.orig
+
 # Auto-generated config (copied from config.def.h on first build)
 config.h
 
