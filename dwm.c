@@ -1014,7 +1014,11 @@ enternotify(XEvent *e)
 		selmon = m;
 	} else if (!c || c == selmon->sel)
 		return;
-	focus(c);
+
+	if (focusonhover)
+		focus(c);
+	else
+		focus(NULL);
 }
 
 void
