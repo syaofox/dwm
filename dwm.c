@@ -129,6 +129,7 @@ typedef struct {
 struct Monitor {
 	char ltsymbol[16];
 	float mfact;
+	float mfacts[9];
 	int nmaster;
 	int num;
 	int by;               /* bar geometry */
@@ -752,10 +753,13 @@ Monitor *
 createmon(void)
 {
 	Monitor *m;
+	int i;
 
 	m = ecalloc(1, sizeof(Monitor));
 	m->tagset[0] = m->tagset[1] = 1;
 	m->mfact = mfact;
+	for (i = 0; i < 9; i++)
+		m->mfacts[i] = mfact;
 	m->nmaster = nmaster;
 	m->showbar = showbar;
 	m->topbar = topbar;
@@ -1887,6 +1891,7 @@ void
 setmfact(const Arg *arg)
 {
 	float f;
+	int i;
 
 	if (!arg || !selmon->lt[selmon->sellt]->arrange)
 		return;
@@ -1894,6 +1899,9 @@ setmfact(const Arg *arg)
 	if (f < 0.05 || f > 0.95)
 		return;
 	selmon->mfact = f;
+	for (i = 0; i < 9; i++)
+		if (selmon->tagset[selmon->seltags] & (1 << i))
+			selmon->mfacts[i] = f;
 	arrange(selmon);
 }
 
@@ -2710,11 +2718,33 @@ updatewmhints(Client *c)
 void
 view(const Arg *arg)
 {
-	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
+	int i, oldtag = -1, newtag = -1;
+	unsigned int newtagset = arg->ui & TAGMASK;
+
+	if (newtagset == selmon->tagset[selmon->seltags])
 		return;
-	selmon->seltags ^= 1; /* toggle sel tagset */
-	if (arg->ui & TAGMASK)
-		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
+
+	for (i = 0; i < 9; i++) {
+		if (selmon->tagset[selmon->seltags] & (1 << i)) {
+			oldtag = i;
+			break;
+		}
+	}
+
+	selmon->seltags ^= 1;
+	selmon->tagset[selmon->seltags] = newtagset;
+
+	for (i = 0; i < 9; i++) {
+		if (selmon->tagset[selmon->seltags] & (1 << i)) {
+			newtag = i;
+			break;
+		}
+	}
+	if (oldtag >= 0)
+		selmon->mfacts[oldtag] = selmon->mfact;
+	if (newtag >= 0)
+		selmon->mfact = selmon->mfacts[newtag];
+
 	focus(NULL);
 	arrange(selmon);
 }
