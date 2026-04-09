@@ -252,6 +252,7 @@ static void togglefloating(const Arg *arg);
 static void togglealwaysontop(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
+static void viewnexttag(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
 static void unmanage(Client *c, int destroyed);
 static void unmapnotify(XEvent *e);
@@ -2253,6 +2254,38 @@ toggleview(const Arg *arg)
 		focus(NULL);
 		arrange(selmon);
 	}
+}
+
+void
+viewnexttag(const Arg *arg)
+{
+	unsigned int i, tags[LENGTH(tags)];
+	int current = -1, newtag = -1;
+
+	for (i = 0; i < LENGTH(tags); i++) {
+		tags[i] = 1 << i;
+		if (selmon->tagset[selmon->seltags] & tags[i])
+			current = i;
+	}
+
+	int dir = arg->i > 0 ? 1 : -1;
+	int count = 0;
+	while (count < LENGTH(tags)) {
+		int idx = (current + dir + count * dir + LENGTH(tags)) % LENGTH(tags);
+		Client *c;
+		for (c = selmon->clients; c; c = c->next) {
+			if (c->tags & tags[idx]) {
+				newtag = idx;
+				break;
+			}
+		}
+		if (newtag != -1)
+			break;
+		count++;
+	}
+
+	if (newtag >= 0)
+		view(&(Arg){.ui = tags[newtag]});
 }
 
 void
