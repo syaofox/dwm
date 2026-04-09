@@ -2616,22 +2616,22 @@ updatestatus(void)
 void
 updatesystrayicongeom(Client *i, int w, int h)
 {
+	unsigned int iconSize = systrayiconsize > 0 ? systrayiconsize : bh;
 	if (i) {
-		i->h = bh;
+		i->h = iconSize;
 		if (w == h)
-			i->w = bh;
-		else if (h == bh)
+			i->w = iconSize;
+		else if (h == iconSize)
 			i->w = w;
 		else
-			i->w = (int) ((float)bh * ((float)w / (float)h));
+			i->w = (int) ((float)iconSize * ((float)w / (float)h));
 		applysizehints(i, &(i->x), &(i->y), &(i->w), &(i->h), False);
-		/* force icons into the systray dimensions if they don't want to */
-		if (i->h > bh) {
+		if (i->h > iconSize) {
 			if (i->w == i->h)
-				i->w = bh;
+				i->w = iconSize;
 			else
-				i->w = (int) ((float)bh * ((float)i->w / (float)i->h));
-			i->h = bh;
+				i->w = (int) ((float)iconSize * ((float)i->w / (float)i->h));
+			i->h = iconSize;
 		}
 	}
 }
@@ -2674,6 +2674,9 @@ updatesystray(void)
 	unsigned int x = m->mx + m->mw;
 	unsigned int sw = TEXTW(stext) - lrpad + systrayspacing;
 	unsigned int w = 1;
+	unsigned int iconSize = systrayiconsize > 0 ? systrayiconsize : bh;
+	unsigned int padh = systrayiconpaddingh;
+	unsigned int padv = systrayiconpaddingv;
 
 	if (!showsystray)
 		return;
@@ -2683,7 +2686,7 @@ updatesystray(void)
 		/* init systray */
 		if (!(systray = (Systray *)calloc(1, sizeof(Systray))))
 			die("fatal: could not malloc() %u bytes\n", sizeof(Systray));
-		systray->win = XCreateSimpleWindow(dpy, root, x, m->by, w, bh, 0, 0, scheme[SchemeSel][ColBg].pixel);
+		systray->win = XCreateSimpleWindow(dpy, root, x, m->by, w, iconSize, 0, 0, scheme[SchemeSel][ColBg].pixel);
 		wa.event_mask        = ButtonPressMask | ExposureMask;
 		wa.override_redirect = True;
 		wa.background_pixel  = scheme[SchemeNorm][ColBg].pixel;
@@ -2710,23 +2713,23 @@ updatesystray(void)
 		XChangeWindowAttributes(dpy, i->win, CWBackPixel, &wa);
 		XMapRaised(dpy, i->win);
 		w += systrayspacing;
-		i->x = w;
-		XMoveResizeWindow(dpy, i->win, i->x, 0, i->w, i->h);
-		w += i->w;
+		i->x = w + padh;
+		XMoveResizeWindow(dpy, i->win, i->x, padv, i->w, i->h);
+		w += i->w + padh;
 		if (i->mon != m)
 			i->mon = m;
 	}
 	w = w ? w + systrayspacing : 1;
 	x -= w;
-	XMoveResizeWindow(dpy, systray->win, x, m->by, w, bh);
-	wc.x = x; wc.y = m->by; wc.width = w; wc.height = bh;
+	XMoveResizeWindow(dpy, systray->win, x, m->by, w, iconSize);
+	wc.x = x; wc.y = m->by; wc.width = w; wc.height = iconSize;
 	wc.stack_mode = Above; wc.sibling = m->barwin;
 	XConfigureWindow(dpy, systray->win, CWX|CWY|CWWidth|CWHeight|CWSibling|CWStackMode, &wc);
 	XMapWindow(dpy, systray->win);
 	XMapSubwindows(dpy, systray->win);
 	/* redraw background */
 	XSetForeground(dpy, drw->gc, scheme[SchemeNorm][ColBg].pixel);
-	XFillRectangle(dpy, systray->win, drw->gc, 0, 0, w, bh);
+	XFillRectangle(dpy, systray->win, drw->gc, 0, 0, w, iconSize);
 	XSync(dpy, False);
 }
 
