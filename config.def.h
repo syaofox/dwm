@@ -80,6 +80,8 @@ static const char *dmenucmd[] = { "rofi", "-show", "drun", "-theme", "theme", "-
 static const char *termcmd[]  = { "gnome-terminal", NULL };
 static const char *filecmd[]  = { "nemo",  NULL };
 static const char *clipman[] = { "/bin/sh", "-c", "xfce4-clipman-history", NULL };
+static const char *lockcmd[] = { "/bin/sh", "-c", "slock -m \"Single is simple, double is double.\"", NULL };
+
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -123,7 +125,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
 	{ MODKEY,                       XK_e,      spawn,          {.v = filecmd } },
-	{ MODKEY,                       XK_v,      spawn,          {.v = clipman } }, /* 剪贴板 */
+	{ MODKEY,                       XK_v,      spawn,          {.v = clipman } },
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
 
 };
 
