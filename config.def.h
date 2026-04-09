@@ -81,6 +81,7 @@ static const char *filecmd[]  = { "nemo",  NULL };
 static const char *clipmancmd[] = { "/bin/sh", "-c", "xfce4-clipman-history", NULL };
 static const char *lockcmd[] = { "/bin/sh", "-c", "slock -m \"Single is simple, double is double.\"", NULL };
 static const char *showkeyscmd[] = { "/bin/sh", "-c", "~/.config/dwm/show-keys.sh", NULL };
+static const char *bravecmd[] = { "/bin/sh", "-c", "~/.config/dwm/run-brave.sh", NULL };
 
 
 static const Key keys[] = {
@@ -130,6 +131,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_v,      spawn,          {.v = clipmancmd } },
 	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_slash,  spawn,          {.v = showkeyscmd } },
+	{ MODKEY,                       XK_w,      spawn,          {.v = bravecmd } },
 
 };
 
