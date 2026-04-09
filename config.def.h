@@ -79,8 +79,9 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "rofi", "-show", "drun", "-theme", "theme", "-show-icons", NULL };
 static const char *termcmd[]  = { "gnome-terminal", NULL };
 static const char *filecmd[]  = { "nemo",  NULL };
-static const char *clipman[] = { "/bin/sh", "-c", "xfce4-clipman-history", NULL };
+static const char *clipmancmd[] = { "/bin/sh", "-c", "xfce4-clipman-history", NULL };
 static const char *lockcmd[] = { "/bin/sh", "-c", "slock -m \"Single is simple, double is double.\"", NULL };
+static const char *showkeyscmd[] = { "/bin/sh", "-c", "~/.config/dwm/show-keys.sh", NULL };
 
 
 static const Key keys[] = {
@@ -125,8 +126,9 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
 	{ MODKEY,                       XK_e,      spawn,          {.v = filecmd } },
-	{ MODKEY,                       XK_v,      spawn,          {.v = clipman } },
+	{ MODKEY,                       XK_v,      spawn,          {.v = clipmancmd } },
 	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
+	{ MODKEY|ShiftMask,             XK_slash,  spawn,          {.v = showkeyscmd } },
 
 };
 
