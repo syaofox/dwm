@@ -18,13 +18,13 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font Propo:style=Bold:size=10" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font Propo:style=Bold:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
-static const char col_white[]       = "#ffffff";
-static const char col_red[]       	= "#940303";
+static const char col_gray1[]       = "#2E3440";
+static const char col_gray2[]       = "#4C566A";
+static const char col_gray3[]       = "#D8DEE9";
+static const char col_gray4[]       = "#ECEFF4";
+static const char col_cyan[]        = "#88C0D0";
+static const char col_white[]       = "#ECEFF4";
+static const char col_red[]       	= "#BF616A";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm]   = { col_gray2, col_gray1, col_gray2 }, /* 未选中，无客户端 */
