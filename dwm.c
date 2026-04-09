@@ -233,6 +233,7 @@ static void sendmon(Client *c, Monitor *m);
 static void setclientstate(Client *c, long state);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
+static void cyclelayout(const Arg *arg);
 static void setlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
@@ -1845,6 +1846,25 @@ setfullscreen(Client *c, int fullscreen)
 		resizeclient(c, c->x, c->y, c->w, c->h);
 		arrange(c->mon);
 	}
+}
+
+void
+cyclelayout(const Arg *arg)
+{
+	int i;
+	for(i = 0; i < LENGTH(layouts) && &layouts[i] != selmon->lt[selmon->sellt]; i++);
+	
+	if (arg->i > 0) {
+		i++;
+		if (i >= LENGTH(layouts))
+			i = 0;
+	} else {
+		i--;
+		if (i < 0)
+			i = LENGTH(layouts) - 1;
+	}
+	
+	setlayout(&((Arg) { .v = &layouts[i] }));
 }
 
 void
