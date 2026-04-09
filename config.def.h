@@ -82,6 +82,8 @@ static const char *clipmancmd[] = { "/bin/sh", "-c", "xfce4-clipman-history", NU
 static const char *lockcmd[] = { "/bin/sh", "-c", "slock -m \"Single is simple, double is double.\"", NULL };
 static const char *showkeyscmd[] = { "/bin/sh", "-c", "~/.config/dwm/show-keys.sh", NULL };
 static const char *bravecmd[] = { "/bin/sh", "-c", "~/.config/dwm/run-brave.sh", NULL };
+static const char *sysactcmd[] = { "/bin/sh", "-c", "~/.config/dwm/sysact.sh", NULL };
+
 
 
 static const Key keys[] = {
@@ -132,6 +134,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_slash,  spawn,          {.v = showkeyscmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = bravecmd } },
+	{ ControlMask|Mod1Mask,         XK_Delete, spawn,          {.v = sysactcmd } },
+
 
 };
 
