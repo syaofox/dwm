@@ -23,13 +23,13 @@ static const int focusonhover       = 0;        /* 1: focus on hover, 0: don't f
 static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font Propo:style=Bold:size=10" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font Propo:style=Bold:size=10";
-static const char col_gray1[]       = "#2E3440";
-static const char col_gray2[]       = "#4C566A";
-static const char col_gray3[]       = "#D8DEE9";
-static const char col_gray4[]       = "#ECEFF4";
-static const char col_cyan[]        = "#88C0D0";
-static const char col_white[]       = "#ECEFF4";
-static const char col_red[]       	= "#BF616A";
+static char col_gray1[]       = "#2E3440";
+static char col_gray2[]       = "#4C566A";
+static char col_gray3[]       = "#D8DEE9";
+static char col_gray4[]       = "#ECEFF4";
+static char col_cyan[]        = "#88C0D0";
+static char col_white[]       = "#ECEFF4";
+static char col_red[]         = "#BF616A";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm]   = { col_gray2, col_gray1, col_gray2 }, /* 未选中，无客户端 */
@@ -89,6 +89,19 @@ static const char *showkeyscmd[] = { "/bin/sh", "-c", "~/.config/dwm/show-keys.s
 static const char *bravecmd[] = { "/bin/sh", "-c", "~/.config/dwm/run-brave.sh", NULL };
 static const char *sysactcmd[] = { "/bin/sh", "-c", "~/.config/dwm/sysact.sh", NULL };
 
+
+/*
+ * Xresources preferences to load at startup
+ */
+ResourcePref resources[] = {		
+		{ "col_gray1",          STRING,  &col_gray1 },
+		{ "col_gray2",          STRING,  &col_gray2 },
+		{ "col_gray3",          STRING,  &col_gray3 },
+		{ "col_gray4",          STRING,  &col_gray4 },
+		{ "col_cyan",           STRING,  &col_cyan },
+		{ "col_white",          STRING,  &col_white },
+		{ "col_red",            STRING,  &col_red },
+};
 
 
 static const Key keys[] = {
