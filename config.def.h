@@ -30,7 +30,7 @@ static char col_gray4[]       = "#ECEFF4";
 static char col_cyan[]        = "#88C0D0";
 static char col_white[]       = "#ECEFF4";
 static char col_red[]         = "#BF616A";
-static const char *colors[][3]      = {
+static char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm]   = { col_gray2, col_gray1, col_gray2 }, /* 未选中，无客户端 */
 	[SchemeSel]    = { col_gray4, col_cyan,  col_cyan  }, /* 选中，无客户端 */
