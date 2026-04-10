@@ -37,7 +37,7 @@ static const char *colors[][3]      = {
 	[SchemeOcc]    = { col_white, col_gray1, col_gray2 }, /* 未选中，有客户端 */
 	[SchemeSelOcc] = { col_white, col_cyan,  col_cyan  }, /* 选中，有客户端 */
 	[SchemeStatus] = { col_gray3, col_gray1, col_gray1 }, /* 状态栏 */
-	[SchemeTitle]  = { col_gray4, col_gray1, col_gray2 }, /* 窗口标题区 */
+	[SchemeTitle]  = { col_white, col_gray1, col_gray2 }, /* 窗口标题区 */
 };
 
 /* tagging */
