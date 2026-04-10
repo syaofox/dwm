@@ -88,6 +88,8 @@ static const char *lockcmd[] = { "/bin/sh", "-c", "slock -m \"Single is simple, 
 static const char *showkeyscmd[] = { "/bin/sh", "-c", "~/.config/dwm/show-keys.sh", NULL };
 static const char *bravecmd[] = { "/bin/sh", "-c", "~/.config/dwm/run-brave.sh", NULL };
 static const char *sysactcmd[] = { "/bin/sh", "-c", "~/.config/dwm/sysact.sh", NULL };
+static const char *shotclipcmd[] = { "/bin/sh", "-c", "maim -s | xclip -selection clipboard -t image/png", NULL };
+static const char *shotsavecmd[] = { "/bin/sh", "-c", "mkdir -p $HOME/Pictures/Screenshots && maim -s $HOME/Pictures/Screenshots/screenshot_$(date +%Y%m%d_%H%M%S).png", NULL };
 
 
 /*
@@ -152,6 +154,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_slash,  spawn,          {.v = showkeyscmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = bravecmd } },
+	{ MODKEY,                       XK_s,      spawn,          {.v = shotclipcmd } },
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = shotsavecmd } },
 	{ ControlMask|Mod1Mask,         XK_Delete, spawn,          {.v = sysactcmd } },
 
 
