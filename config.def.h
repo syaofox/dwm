@@ -81,7 +81,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "rofi", "-show", "drun", "-theme", "theme", "-show-icons", NULL };
-static const char *termcmd[]  = { "gnome-terminal", NULL };
+static const char *termcmd[]  = { "/bin/bash" , "-c", "~/.config/dwm/run-term.sh", NULL };
 static const char *filecmd[]  = { "nemo",  NULL };
 static const char *clipmancmd[] = { "/bin/sh", "-c", "xfce4-clipman-history", NULL };
 static const char *lockcmd[] = { "/bin/sh", "-c", "slock -m \"Single is simple, double is double.\"", NULL };
