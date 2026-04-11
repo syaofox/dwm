@@ -90,7 +90,7 @@ static const char *bravecmd[] = { "/bin/sh", "-c", "~/.config/dwm/run-brave.sh",
 static const char *sysactcmd[] = { "/bin/sh", "-c", "~/.config/dwm/sysact.sh", NULL };
 static const char *shotclipcmd[] = { "/bin/sh", "-c", "maim -s | xclip -selection clipboard -t image/png", NULL };
 static const char *shotsavecmd[] = { "/bin/sh", "-c", "mkdir -p $HOME/Pictures/Screenshots && maim -s $HOME/Pictures/Screenshots/screenshot_$(date +%Y%m%d_%H%M%S).png", NULL };
-static const char *chgwallscmd[] = { "/bin/sh", "-c", "~/.config/dwm/chgwallscmd.sh", NULL };
+static const char *chgwallscmd[] = { "/bin/sh", "-c", "~/.config/dwm/change-wallpaper.sh", NULL };
 
 
 /*
