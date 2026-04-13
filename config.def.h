@@ -23,23 +23,44 @@ static const int focusonhover       = 0;        /* 1: focus on hover, 0: don't f
 static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font Propo:style=Bold:size=10" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font Propo:style=Bold:size=10";
-static char col_gray1[]       		= "#222222";
-static char col_gray2[]       		= "#444444";
-static char col_gray3[]       		= "#bbbbbb";
-static char col_gray4[]       		= "#eeeeee";
-static char col_cyan[]        		= "#005577";
-static char col_white[]       		= "#ECEFF4";
-static char col_red[]         		= "#FF7777";
-static char col_spc[]         		= "#FFFFFF";
+
+static char col_norm_fg[]       		= "#444444";
+static char col_norm_bg[]       		= "#222222";
+static char col_norm_border[]       = "#444444";
+
+static char col_sel_fg[]       		= "#eeeeee";
+static char col_sel_bg[]       		= "#005577";
+static char col_sel_border[]        = "#005577";
+
+static char col_occ_fg[]       		= "#ECEFF4";
+static char col_occ_bg[]       		= "#222222";
+static char col_occ_border[]       = "#444444";
+
+static char col_selocc_fg[]       = "#FFFFFF";
+static char col_selocc_bg[]       = "#005577";
+static char col_selocc_border[]   = "#005577";
+
+static char col_status_fg[]      = "#bbbbbb";
+static char col_status_bg[]      = "#222222";
+static char col_status_border[]  = "#222222";
+
+static char col_title_fg[]       = "#ECEFF4";
+static char col_title_bg[]       = "#222222";
+static char col_title_border[]   = "#444444";
+
+static char col_titlesel_fg[]    = "#FFFFFF";
+static char col_titlesel_bg[]    = "#005577";
+static char col_titlesel_border[] = "#222222";
+
 static char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm]   = { col_gray2, col_gray1, col_gray2 }, /* 未选中，无客户端 */
-	[SchemeSel]    = { col_gray4, col_cyan,  col_cyan  }, /* 选中，无客户端 */
-	[SchemeOcc]    = { col_white, col_gray1, col_gray2 }, /* 未选中，有客户端 */
-	[SchemeSelOcc] = { col_spc,	  col_cyan,  col_cyan  }, /* 选中，有客户端 */
-	[SchemeStatus] = { col_gray3, col_gray1, col_gray1 }, /* 状态栏 */
-	[SchemeTitleNorm]  = { col_white, col_gray1, col_gray2 }, /* 窗口标题区*/
-	[SchemeTitleSel]  = { col_spc, col_cyan, col_gray1 }, /* 窗口标题区选中*/
+	[SchemeNorm]   = { col_norm_fg, col_norm_bg, col_norm_border }, /* 未选中，无客户端 */
+	[SchemeSel]    = { col_sel_fg, col_sel_bg, col_sel_border }, /* 选中，无客户端 */
+	[SchemeOcc]    = { col_occ_fg, col_occ_bg, col_occ_border }, /* 未选中，有客户端 */
+	[SchemeSelOcc] = { col_selocc_fg, col_selocc_bg, col_selocc_border }, /* 选中，有客户端 */
+	[SchemeStatus] = { col_status_fg, col_status_bg, col_status_border }, /* 状态栏 */
+	[SchemeTitleNorm]  = { col_title_fg, col_title_bg, col_title_border }, /* 窗口标题区*/
+	[SchemeTitleSel]  = { col_titlesel_fg, col_titlesel_bg, col_titlesel_border }, /* 窗口标题区选中*/
 };
 
 /* tagging */
@@ -99,14 +120,27 @@ static const char *chgwallscmd[] = { "/bin/sh", "-c", "~/.config/dwm/change-wall
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {		
-		{ "col_gray1",          STRING,  &col_gray1 },
-		{ "col_gray2",          STRING,  &col_gray2 },
-		{ "col_gray3",          STRING,  &col_gray3 },
-		{ "col_gray4",          STRING,  &col_gray4 },
-		{ "col_cyan",           STRING,  &col_cyan },
-		{ "col_white",          STRING,  &col_white },
-		{ "col_red",            STRING,  &col_red },
-		{ "col_spc",            STRING,  &col_spc },
+		{ "col_norm_fg",        STRING,  &col_norm_fg },
+		{ "col_norm_bg",        STRING,  &col_norm_bg },
+		{ "col_norm_border",    STRING,  &col_norm_border },
+		{ "col_sel_fg",         STRING,  &col_sel_fg },
+		{ "col_sel_bg",         STRING,  &col_sel_bg },
+		{ "col_sel_border",     STRING,  &col_sel_border },
+		{ "col_occ_fg",         STRING,  &col_occ_fg },
+		{ "col_occ_bg",         STRING,  &col_occ_bg },
+		{ "col_occ_border",     STRING,  &col_occ_border },
+		{ "col_selocc_fg",      STRING,  &col_selocc_fg },
+		{ "col_selocc_bg",      STRING,  &col_selocc_bg },
+		{ "col_selocc_border",  STRING,  &col_selocc_border },
+		{ "col_status_fg",     STRING,  &col_status_fg },
+		{ "col_status_bg",     STRING,  &col_status_bg },
+		{ "col_status_border", STRING,  &col_status_border },
+		{ "col_title_fg",      STRING,  &col_title_fg },
+		{ "col_title_bg",      STRING,  &col_title_bg },
+		{ "col_title_border",  STRING,  &col_title_border },
+		{ "col_titlesel_fg",   STRING,  &col_titlesel_fg },
+		{ "col_titlesel_bg",   STRING,  &col_titlesel_bg },
+		{ "col_titlesel_border", STRING, &col_titlesel_border },
 
 };
 
