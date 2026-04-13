@@ -17,10 +17,13 @@ static const unsigned int gappov    = 4;        /* vertical outer gap */
 static const int smartgaps          = 0;        /* 1 means no outer gap when 1 client */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const unsigned int barheight = 24;        /* bar height (0 = auto) */
+static const unsigned int barheight = 26;        /* bar height (0 = auto) */
 static const int focusonhover       = 0;        /* 1: focus on hover, 0: don't focus */
 static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font Propo:style=Bold:size=10" };
+static const char *tagfonts[]        = { "JetBrainsMono Nerd Font Propo:style=Bold:size=11" };
+static const char *titlefonts[]      = { "JetBrainsMono Nerd Font Propo:style=Regular:size=10" };
+static const char *systrayfonts[]    = { "JetBrainsMono Nerd Font Propo:style=Regular:size=9" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font Propo:style=Bold:size=10";
 
 static char col_norm_fg[]       		= "#444444";

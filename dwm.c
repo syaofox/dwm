@@ -967,6 +967,7 @@ drawbar(Monitor *m)
 			urg |= c->tags;
 	}
 	x = 0;
+	drw_setfontset(drw, drw->tagfonts);
 	for (i = 0; i < LENGTH(tags); i++) {
 		w = TEXTW(tags[i]);
 		int is_selected = m->tagset[m->seltags] & 1 << i;
@@ -984,10 +985,12 @@ drawbar(Monitor *m)
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
 		x += w;
 	}
+	drw_setfontset(drw, drw->fonts);
 	w = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
+	drw_setfontset(drw, drw->titlefonts);
 	if ((w = m->ww - tw - stw - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[m == selmon ? SchemeTitleSel : SchemeTitleNorm]);
@@ -1002,6 +1005,7 @@ drawbar(Monitor *m)
 			drw_rect(drw, x, 0, w, bh, 1, 1);
 		}
 	}
+	drw_setfontset(drw, drw->fonts);
 	drw_map(drw, m->barwin, 0, 0, m->ww - stw, bh);
 }
 
@@ -2001,6 +2005,20 @@ setup(void)
 	drw = drw_create(dpy, screen, root, sw, sh);
 	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
+	Fnt *fontset = drw->fonts;
+	if (!drw_fontset_create(drw, tagfonts, LENGTH(tagfonts)))
+		die("no tag fonts could be loaded.");
+	drw->tagfonts = drw->fonts;
+	drw->fonts = fontset;
+	if (!drw_fontset_create(drw, titlefonts, LENGTH(titlefonts)))
+		die("no title fonts could be loaded.");
+	drw->titlefonts = drw->fonts;
+	drw->fonts = fontset;
+	if (!drw_fontset_create(drw, systrayfonts, LENGTH(systrayfonts)))
+		die("no systray fonts could be loaded.");
+	drw->systrayfonts = drw->fonts;
+	drw->fonts = fontset;
+	drw->curfonts = drw->fonts;
 	lrpad = drw->fonts->h;
 	bh = barheight > 0 ? barheight : drw->fonts->h + 2;
 	updategeom();
