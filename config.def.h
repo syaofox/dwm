@@ -54,6 +54,11 @@ static char col_titlesel_fg[]    = "#FFFFFF";
 static char col_titlesel_bg[]    = "#005577";
 static char col_titlesel_border[] = "#222222";
 
+static char col_tagunderline[]   = "#d488d6";
+
+static const unsigned int tagunderlinepadding = 4;
+static const unsigned int tagunderlineheight = 2;
+
 static char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm]   = { col_norm_fg, col_norm_bg, col_norm_border }, /* 未选中，无客户端 */
@@ -63,6 +68,7 @@ static char *colors[][3]      = {
 	[SchemeStatus] = { col_status_fg, col_status_bg, col_status_border }, /* 状态栏 */
 	[SchemeTitleNorm]  = { col_title_fg, col_title_bg, col_title_border }, /* 窗口标题区*/
 	[SchemeTitleSel]  = { col_titlesel_fg, col_titlesel_bg, col_titlesel_border }, /* 窗口标题区选中*/
+	[SchemeTagUnderline] = { col_tagunderline, col_tagunderline, col_tagunderline }, /* tag下划线 */
 };
 
 /* tagging */
@@ -132,7 +138,7 @@ ResourcePref resources[] = {
 		{ "col_occ_bg",         STRING,  &col_occ_bg },
 		{ "col_occ_border",     STRING,  &col_occ_border },
 		{ "col_selocc_fg",      STRING,  &col_selocc_fg },
-		{ "col_selocc_bg",      STRING,  &col_selocc_bg },
+		{ "col_selocc_bg",     STRING,  &col_selocc_bg },
 		{ "col_selocc_border",  STRING,  &col_selocc_border },
 		{ "col_status_fg",     STRING,  &col_status_fg },
 		{ "col_status_bg",     STRING,  &col_status_bg },
@@ -143,6 +149,7 @@ ResourcePref resources[] = {
 		{ "col_titlesel_fg",   STRING,  &col_titlesel_fg },
 		{ "col_titlesel_bg",   STRING,  &col_titlesel_bg },
 		{ "col_titlesel_border", STRING, &col_titlesel_border },
+		{ "col_tagunderline",  STRING,  &col_tagunderline },
 
 };
 
