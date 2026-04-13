@@ -28,33 +28,34 @@ static const char dmenufont[]       = "JetBrainsMono Nerd Font Propo:style=Bold:
 
 static char col_norm_fg[]       		= "#444444";
 static char col_norm_bg[]       		= "#222222";
-static char col_norm_border[]       = "#444444";
+static char col_norm_border[]      		= "#444444";
 
-static char col_sel_fg[]       		= "#eeeeee";
-static char col_sel_bg[]       		= "#005577";
-static char col_sel_border[]        = "#005577";
+static char col_sel_fg[]       			= "#eeeeee";
+static char col_sel_bg[]       			= "#005577";
+static char col_sel_border[]        	= "#005577";
 
-static char col_occ_fg[]       		= "#ECEFF4";
-static char col_occ_bg[]       		= "#222222";
-static char col_occ_border[]       = "#444444";
+static char col_occ_fg[]       			= "#ECEFF4";
+static char col_occ_bg[]       			= "#222222";
+static char col_occ_border[]       		= "#444444";
 
-static char col_selocc_fg[]       = "#FFFFFF";
-static char col_selocc_bg[]       = "#005577";
-static char col_selocc_border[]   = "#005577";
+static char col_selocc_fg[]       		= "#FFFFFF";
+static char col_selocc_bg[]       		= "#005577";
+static char col_selocc_border[]   		= "#005577";
 
-static char col_status_fg[]      = "#bbbbbb";
-static char col_status_bg[]      = "#222222";
-static char col_status_border[]  = "#222222";
+static char col_status_fg[]      		= "#bbbbbb";
+static char col_status_bg[]      		= "#222222";
+static char col_status_border[]  		= "#222222";
 
-static char col_title_fg[]       = "#ECEFF4";
-static char col_title_bg[]       = "#222222";
-static char col_title_border[]   = "#444444";
+static char col_title_fg[]       		= "#ECEFF4";
+static char col_title_bg[]       		= "#222222";
+static char col_title_border[]   		= "#444444";
 
-static char col_titlesel_fg[]    = "#FFFFFF";
-static char col_titlesel_bg[]    = "#005577";
-static char col_titlesel_border[] = "#222222";
+static char col_titlesel_fg[]    		= "#FFFFFF";
+static char col_titlesel_bg[]    		= "#005577";
+static char col_titlesel_border[] 		= "#222222";
 
-static char col_tagunderline[]   = "#d488d6";
+static int enabletagunderline 			= 1;
+static char col_tagunderline[]   		= "#d488d6";
 
 static const unsigned int tagunderlinepadding = 4;
 static const unsigned int tagunderlineheight = 2;
@@ -150,6 +151,7 @@ ResourcePref resources[] = {
 		{ "col_titlesel_bg",   STRING,  &col_titlesel_bg },
 		{ "col_titlesel_border", STRING, &col_titlesel_border },
 		{ "col_tagunderline",  STRING,  &col_tagunderline },
+		{ "tagunderline",  STRING,  &enabletagunderline },
 
 };
 

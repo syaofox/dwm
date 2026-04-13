@@ -984,7 +984,7 @@ drawbar(Monitor *m)
 
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
 
-		if (is_selected) {
+		if (is_selected && enabletagunderline) {
 			drw_setscheme(drw, scheme[SchemeTagUnderline]);
 			drw_rect(drw, x + tagunderlinepadding, bh - tagunderlineheight, w - 2 * tagunderlinepadding, tagunderlineheight, 1, 0);
 		}
