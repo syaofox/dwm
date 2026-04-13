@@ -38,7 +38,8 @@ static char *colors[][3]      = {
 	[SchemeOcc]    = { col_white, col_gray1, col_gray2 }, /* 未选中，有客户端 */
 	[SchemeSelOcc] = { col_spc,	  col_cyan,  col_cyan  }, /* 选中，有客户端 */
 	[SchemeStatus] = { col_gray3, col_gray1, col_gray1 }, /* 状态栏 */
-	[SchemeTitle]  = { col_white, col_gray1, col_gray2 }, /* 窗口标题区 */
+	[SchemeTitleNorm]  = { col_white, col_gray1, col_gray2 }, /* 窗口标题区*/
+	[SchemeTitleSel]  = { col_spc, col_cyan, col_gray1 }, /* 窗口标题区选中*/
 };
 
 /* tagging */
@@ -134,10 +135,10 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_space,  togglealwaysontop, {0} },
 	// { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	// { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	// { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	// { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	// { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	// { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_comma,  focusmon,       {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_period, focusmon,       {.i = +1 } },
+	{ MODKEY|ControlMask|ShiftMask, XK_comma,  tagmon,         {.i = -1 } },
+	{ MODKEY|ControlMask|ShiftMask, XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_equal,  incrgaps,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  incrgaps,       {.i = -1 } },
 	{ MODKEY,                       XK_g,      togglegaps,     {0} },
