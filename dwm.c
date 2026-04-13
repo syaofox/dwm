@@ -2691,7 +2691,6 @@ updatesystray(void)
 	unsigned int sw = TEXTW(stext) - lrpad + systrayspacing;
 	unsigned int w = 1;
 	unsigned int padh = systrayiconpaddingh;
-	unsigned int padv = systrayiconpaddingv;
 
 	if (!showsystray)
 		return;
@@ -2729,7 +2728,7 @@ updatesystray(void)
 		XMapRaised(dpy, i->win);
 		w += systrayspacing;
 		i->x = w + padh;
-		XMoveResizeWindow(dpy, i->win, i->x, padv, i->w, i->h);
+		XMoveResizeWindow(dpy, i->win, i->x, (bh - i->h) / 2, i->w, i->h);
 		w += i->w + padh;
 		if (i->mon != m)
 			i->mon = m;
