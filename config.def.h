@@ -23,11 +23,12 @@ static const int focusonhover       = 0;        /* 1: focus on hover, 0: don't f
 static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font Propo:style=Bold:size=10" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font Propo:style=Bold:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static char col_gray1[]       		= "#222222";
+static char col_gray2[]       		= "#444444";
+static char col_gray3[]       		= "#bbbbbb";
+static char col_gray4[]       		= "#eeeeee";
+static char col_cyan[]        		= "#005577";
+static char col_white[]       		= "#ECEFF4";
 static char col_red[]         		= "#FF7777";
 static char col_spc[]         		= "#FFFFFF";
 static char *colors[][3]      = {
