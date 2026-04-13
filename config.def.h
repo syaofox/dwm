@@ -23,19 +23,19 @@ static const int focusonhover       = 0;        /* 1: focus on hover, 0: don't f
 static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font Propo:style=Bold:size=10" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font Propo:style=Bold:size=10";
-static char col_gray1[]       = "#2E3440";
-static char col_gray2[]       = "#4C566A";
-static char col_gray3[]       = "#D8DEE9";
-static char col_gray4[]       = "#ECEFF4";
-static char col_cyan[]        = "#88C0D0";
-static char col_white[]       = "#ECEFF4";
-static char col_red[]         = "#BF616A";
+static const char col_gray1[]       = "#222222";
+static const char col_gray2[]       = "#444444";
+static const char col_gray3[]       = "#bbbbbb";
+static const char col_gray4[]       = "#eeeeee";
+static const char col_cyan[]        = "#005577";
+static char col_red[]         		= "#FF7777";
+static char col_spc[]         		= "#FFFFFF";
 static char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm]   = { col_gray2, col_gray1, col_gray2 }, /* 未选中，无客户端 */
 	[SchemeSel]    = { col_gray4, col_cyan,  col_cyan  }, /* 选中，无客户端 */
 	[SchemeOcc]    = { col_white, col_gray1, col_gray2 }, /* 未选中，有客户端 */
-	[SchemeSelOcc] = { col_white, col_cyan,  col_cyan  }, /* 选中，有客户端 */
+	[SchemeSelOcc] = { col_spc,	  col_cyan,  col_cyan  }, /* 选中，有客户端 */
 	[SchemeStatus] = { col_gray3, col_gray1, col_gray1 }, /* 状态栏 */
 	[SchemeTitle]  = { col_white, col_gray1, col_gray2 }, /* 窗口标题区 */
 };
@@ -104,6 +104,8 @@ ResourcePref resources[] = {
 		{ "col_cyan",           STRING,  &col_cyan },
 		{ "col_white",          STRING,  &col_white },
 		{ "col_red",            STRING,  &col_red },
+		{ "col_spc",            STRING,  &col_spc },
+
 };
 
 
