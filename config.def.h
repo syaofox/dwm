@@ -83,9 +83,13 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   iscentered   isalwaysontop   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           0,            0,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           0,            0,           -1 },
+	/* class      									instance    								title				tags mask     isfloating   iscentered   isalwaysontop   monitor */
+	{ "FreeFileSync",               				NULL,                   					NULL,				1 << 8, 	  0,           0,            0,           -1 },
+	{ "Localsend",                  				"localsend",            					NULL,				1 << 8, 	  0,           0,            0,           -1 },
+	{ "mpv",                        				NULL,       								NULL,				0,            1,           1,            1,           -1 },
+	{ "Io.github.celluloid_player.Celluloid",       "io.github.celluloid_player.Celluloid",     NULL,				0,            1,           1,            1,           -1 },
+	{ "Xviewer",                    				NULL,       								NULL,				0,            1,           1,            1,           -1 },
+	
 };
 
 /* layout(s) */
