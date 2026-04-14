@@ -291,6 +291,7 @@ static Client *wintosystrayicon(Window w);
 static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
+static void swapstack(const Arg *arg);
 static void zoom(const Arg *arg);
 static void load_xresources(void);
 static void resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst);
@@ -2947,6 +2948,43 @@ zoom(const Arg *arg)
 	if (c == nexttiled(selmon->clients) && !(c = nexttiled(c->next)))
 		return;
 	pop(c);
+}
+
+void
+swapstack(const Arg *arg)
+{
+	Client *c = NULL, *cstack = NULL;
+	int i, n = 0;
+
+	if (!selmon->lt[selmon->sellt]->arrange)
+		return;
+
+	for (c = selmon->clients; c; c = c->next)
+		if (ISVISIBLE(c) && !c->isfloating)
+			n++;
+
+	if (n < 2)
+		return;
+
+	Client **list = ecalloc(n, sizeof(Client *));
+	for (c = selmon->clients, i = 0; c; c = c->next)
+		if (ISVISIBLE(c) && !c->isfloating)
+			list[i++] = c;
+
+	cstack = selmon->stack;
+	for (i = 0; i < n; i++) {
+		c = list[i];
+		detach(c);
+		if (i < selmon->nmaster) {
+			attachaside(c);
+		} else {
+			attach(c);
+		}
+	}
+	free(list);
+
+	selmon->stack = cstack;
+	arrange(selmon);
 }
 
 void
