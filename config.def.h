@@ -22,7 +22,10 @@ static const int focusonhover       = 0;        /* 1: focus on hover, 0: don't f
 static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font Propo:style=Bold:size=10" };
 static const char *tagfonts[]        = { "JetBrainsMono Nerd Font Propo:style=Bold:size=11" };
-static const char *titlefonts[]      = { "JetBrainsMono Nerd Font Propo:style=Regular:size=10" };
+static const char *titlefonts[]      = { 
+	"Noto Sans CJK SC:style=Regular:size=9",
+	"JetBrainsMono Nerd Font Propo:style=Regular:size=10"
+ };
 static const char *systrayfonts[]    = { "JetBrainsMono Nerd Font Propo:style=Regular:size=9" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font Propo:style=Bold:size=10";
 
