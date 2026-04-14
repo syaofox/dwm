@@ -219,6 +219,13 @@ static const Key keys[] = {
 
 };
 
+/* AppKey: application-specific key bindings */
+static const AppKey appkeys[] = {
+    /* class                                    instance                  				title                 modifier 		key			function           argument */
+    { "Io.github.celluloid_player.Celluloid", 	"io.github.celluloid_player.Celluloid", NULL,                 0,         	XK_q,       killclient,        {0} },
+    { "Xviewer",                                "xviewer",                      		NULL,                 0,          	XK_q,       killclient,        {0} },
+};
+
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {

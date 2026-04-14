@@ -123,6 +123,16 @@ typedef struct {
 } Key;
 
 typedef struct {
+	const char *class;
+	const char *instance;
+	const char *title;
+	unsigned int mod;
+	KeySym keysym;
+	void (*func)(const Arg *);
+	const Arg arg;
+} AppKey;
+
+typedef struct {
 	const char *symbol;
 	void (*arrange)(Monitor *);
 } Layout;
@@ -219,6 +229,7 @@ static unsigned int getsystraywidth();
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
+static void updateappkeys(Client *c);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
@@ -335,6 +346,7 @@ static int enablegaps = 1;
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
+extern const AppKey appkeys[];
 
 /* compile-time check if all tags fit into an unsigned int bit array. */
 struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
@@ -1083,6 +1095,8 @@ focus(Client *c)
 		XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
 	}
 	selmon->sel = c;
+	if (c)
+		updateappkeys(c);
 	drawbars();
 }
 
@@ -1300,6 +1314,38 @@ keypress(XEvent *e)
 		&& CLEANMASK(keys[i].mod) == CLEANMASK(ev->state)
 		&& keys[i].func)
 			keys[i].func(&(keys[i].arg));
+
+	if (selmon->sel) {
+		XClassHint ch = { NULL, NULL };
+		char *title = NULL;
+
+		XGetClassHint(dpy, selmon->sel->win, &ch);
+		if (XFetchName(dpy, selmon->sel->win, &title) && title)
+			;
+
+		if (ch.res_class || ch.res_name || title) {
+			for (i = 0; i < LENGTH(appkeys); i++) {
+				int match = 1;
+				if (appkeys[i].class && (!ch.res_class || strcmp(appkeys[i].class, ch.res_class) != 0))
+					match = 0;
+				if (appkeys[i].instance && (!ch.res_name || strcmp(appkeys[i].instance, ch.res_name) != 0))
+					match = 0;
+				if (appkeys[i].title && (!title || strstr(title, appkeys[i].title) == NULL))
+					match = 0;
+
+				if (match && keysym == appkeys[i].keysym
+				&& CLEANMASK(appkeys[i].mod) == CLEANMASK(ev->state)
+				&& appkeys[i].func)
+					appkeys[i].func(&(appkeys[i].arg));
+			}
+			if (ch.res_class)
+				XFree(ch.res_class);
+			if (ch.res_name)
+				XFree(ch.res_name);
+			if (title)
+				XFree(title);
+		}
+	}
 }
 
 void
@@ -1371,6 +1417,7 @@ manage(Window w, XWindowAttributes *wa)
 		XRaiseWindow(dpy, c->win);
 	attachaside(c);
 	attachstack(c);
+	updateappkeys(c);
 	XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
 		(unsigned char *) &(c->win), 1);
 	XMoveResizeWindow(dpy, c->win, c->x + 2 * sw, c->y, c->w, c->h); /* some windows require this */
@@ -2277,7 +2324,48 @@ tile(Monitor *m)
 		} else {
 			resize(c, sx, sy, sw - (2*c->bw), (sh / sfacts) + ((i - m->nmaster) < srest ? 1 : 0) - (2*c->bw), 0);
 			sy += HEIGHT(c) + ih;
+	}
+}
+
+void
+updateappkeys(Client *c)
+{
+	unsigned int i, j;
+	unsigned int modifiers[] = { 0, LockMask, numlockmask, numlockmask|LockMask };
+	XClassHint ch = { NULL, NULL };
+	char *title = NULL;
+
+	grabkeys();
+	if (c) {
+		XGetClassHint(dpy, c->win, &ch);
+		if (XFetchName(dpy, c->win, &title) && title)
+			;
+
+		if (ch.res_class || ch.res_name || title) {
+			for (i = 0; i < LENGTH(appkeys); i++) {
+				int match = 1;
+				if (appkeys[i].class && (!ch.res_class || strcmp(appkeys[i].class, ch.res_class) != 0))
+					match = 0;
+				if (appkeys[i].instance && (!ch.res_name || strcmp(appkeys[i].instance, ch.res_name) != 0))
+					match = 0;
+				if (appkeys[i].title && (!title || strstr(title, appkeys[i].title) == NULL))
+					match = 0;
+
+				if (match) {
+					for (j = 0; j < LENGTH(modifiers); j++)
+						XGrabKey(dpy, XKeysymToKeycode(dpy, appkeys[i].keysym),
+							appkeys[i].mod | modifiers[j], root,
+							True, GrabModeAsync, GrabModeAsync);
+				}
+			}
+			if (ch.res_class)
+				XFree(ch.res_class);
+			if (ch.res_name)
+				XFree(ch.res_name);
+			if (title)
+				XFree(title);
 		}
+	}
 }
 
 void
