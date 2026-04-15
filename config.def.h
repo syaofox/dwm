@@ -23,7 +23,7 @@ static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font Propo:style=Bold:size=10" };
 static const char *tagfonts[]        = { "JetBrainsMono Nerd Font Propo:style=Bold:size=11" };
 static const char *titlefonts[]      = { 
-	"Noto Sans CJK SC:style=Regular:size=9",
+	"Noto Sans CJK SC:style=Regular:size=10",
 	"JetBrainsMono Nerd Font Propo:style=Regular:size=10"
  };
 static const char *systrayfonts[]    = { "JetBrainsMono Nerd Font Propo:style=Regular:size=9" };
