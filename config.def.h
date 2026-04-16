@@ -130,6 +130,9 @@ static const char *sysactcmd[] = { "/bin/sh", "-c", "~/.config/dwm/sysact.sh", N
 static const char *shotclipcmd[] = { "/bin/sh", "-c", "maim -s | xclip -selection clipboard -t image/png", NULL };
 static const char *shotsavecmd[] = { "/bin/sh", "-c", "mkdir -p $HOME/Pictures/Screenshots && maim -s $HOME/Pictures/Screenshots/screenshot_$(date +%Y%m%d_%H%M%S).png", NULL };
 static const char *chgwallscmd[] = { "/bin/sh", "-c", "~/.config/dwm/change-wallpaper.sh", NULL };
+static const char *volupcmd[] = { "/bin/sh", "-c", "pactl set-sink-volume @DEFAULT_SINK@ +5%", NULL };
+static const char *voldncmd[] = { "/bin/sh", "-c", "pactl set-sink-volume @DEFAULT_SINK@ -5%", NULL };
+static const char *volmutecmd[] = { "/bin/sh", "-c", "pactl set-sink-mute @DEFAULT_SINK@ toggle", NULL };
 
 
 /*
@@ -217,6 +220,9 @@ static const Key keys[] = {
 	{ ControlMask|Mod1Mask,         XK_Delete, spawn,          {.v = sysactcmd } },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,          {.v = chgwallscmd } },
 
+	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd } },
+	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = voldncmd } },
+	{ 0,                       XF86XK_AudioMute,        spawn, {.v = volmutecmd } },
 };
 
 /* AppKey: application-specific key bindings */
