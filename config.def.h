@@ -130,9 +130,9 @@ static const char *sysactcmd[] = { "/bin/sh", "-c", "~/.config/dwm/sysact.sh", N
 static const char *shotclipcmd[] = { "/bin/sh", "-c", "maim -s | xclip -selection clipboard -t image/png", NULL };
 static const char *shotsavecmd[] = { "/bin/sh", "-c", "mkdir -p $HOME/Pictures/Screenshots && maim -s $HOME/Pictures/Screenshots/screenshot_$(date +%Y%m%d_%H%M%S).png", NULL };
 static const char *chgwallscmd[] = { "/bin/sh", "-c", "~/.config/dwm/change-wallpaper.sh", NULL };
-static const char *volupcmd[] = { "/bin/sh", "-c", "pactl set-sink-volume @DEFAULT_SINK@ +5%", NULL };
-static const char *voldncmd[] = { "/bin/sh", "-c", "pactl set-sink-volume @DEFAULT_SINK@ -5%", NULL };
-static const char *volmutecmd[] = { "/bin/sh", "-c", "pactl set-sink-mute @DEFAULT_SINK@ toggle", NULL };
+static const char *volupcmd[] = { "/bin/sh", "-c", "pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl get-sink-volume @DEFAULT_SINK@ | head -n1 | awk '{print $5}' | sed 's/%//' | xargs -I{} dunstify -t 1000 'Volume {}%'", NULL };
+static const char *voldncmd[] = { "/bin/sh", "-c", "pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl get-sink-volume @DEFAULT_SINK@ | head -n1 | awk '{print $5}' | sed 's/%//' | xargs -I{} dunstify -t 1000 'Volume {}%'", NULL };
+static const char *volmutecmd[] = { "/bin/sh", "-c", "pactl set-sink-mute @DEFAULT_SINK@ toggle && (pactl get-sink-mute @DEFAULT_SINK@ | grep -q yes && dunstify -t 1000 'Muted' || pactl get-sink-volume @DEFAULT_SINK@ | head -n1 | awk '{print $5}' | sed 's/%//' | xargs -I{} dunstify -t 1000 'Volume {}%')", NULL };
 
 
 /*
