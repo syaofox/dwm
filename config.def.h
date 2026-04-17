@@ -89,6 +89,7 @@ static const Rule rules[] = {
 	{ "mpv",                        				NULL,       								NULL,				0,            1,           1,            1,           -1 },
 	{ "Io.github.celluloid_player.Celluloid",       "io.github.celluloid_player.Celluloid",     NULL,				0,            1,           1,            1,           -1 },
 	{ "Xviewer",                    				NULL,       								NULL,				0,            1,           1,            1,           -1 },
+	{ "Xfce4-clipman-history",                    	"xfce4-clipman-history",       				NULL,				0,            1,           1,            1,           -1 },
 	
 };
 
@@ -119,11 +120,11 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "rofi", "-show", "drun", "-theme", "theme", "-show-icons", NULL };
+static const char *dmenucmd[] = { "/bin/sh", "-c", "~/.config/dwm/dwmcmd.sh menu", NULL };
 static const char *termcmd[]  = { "/bin/bash" , "-c", "~/.config/dwm/run-term.sh", NULL };
-static const char *filecmd[]  = { "nemo",  NULL };
-static const char *clipmancmd[] = { "/bin/sh", "-c", "xfce4-clipman-history", NULL };
-static const char *lockcmd[] = { "/bin/sh", "-c", "slock -m \"Single is simple, double is double.\"", NULL };
+static const char *filecmd[]  = { "/bin/sh", "-c", "~/.config/dwm/dwmcmd.sh file", NULL };
+static const char *clipmancmd[] = { "/bin/sh", "-c", "~/.config/dwm/dwmcmd.sh clipman", NULL };
+static const char *lockcmd[] = { "/bin/sh", "-c", "~/.config/dwm/dwmcmd.sh lock", NULL };
 static const char *showkeyscmd[] = { "/bin/sh", "-c", "~/.config/dwm/show-keys.sh", NULL };
 static const char *bravecmd[] = { "/bin/sh", "-c", "~/.config/dwm/run-browser.sh", NULL };
 static const char *rofiwebcmd[] = { "/bin/sh", "-c", "~/.config/dwm/rofi-websites.sh", NULL };
