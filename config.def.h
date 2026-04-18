@@ -90,7 +90,8 @@ static const Rule rules[] = {
 	{ "Io.github.celluloid_player.Celluloid",       "io.github.celluloid_player.Celluloid",     NULL,				0,            1,           1,            1,           -1 },
 	{ "Xviewer",                    				NULL,       								NULL,				0,            1,           1,            1,           -1 },
 	{ "Xfce4-clipman-history",                    	"xfce4-clipman-history",       				NULL,				0,            1,           1,            1,           -1 },
-	
+	{ "org.gnome.FileRoller",                    	"org.gnome.FileRoller",       				NULL,				0,            1,           1,            1,           -1 },
+	{ "zenity",                    					"zenity",       							NULL,				0,            1,           1,            1,           -1 }
 };
 
 /* layout(s) */
