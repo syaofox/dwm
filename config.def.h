@@ -99,6 +99,7 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+static const int nativefullscreen = 0;  /* 1: send _NET_WM_STATE_FULLSCREEN to window (native fullscreen), 0: maximize without state (fake fullscreen) */
 static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
 
 static const Layout layouts[] = {
@@ -193,6 +194,7 @@ static const Key keys[] = {
 	// { MODKEY,                       XK_space,  cyclelayout,    {.i = +1} },
 	// { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglealwaysontop, {0} },
+	{ MODKEY|ShiftMask,             XK_f,      togglefullscreen, {0} },
 	// { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	// { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_comma,  focusmon,       {.i = -1 } },
