@@ -121,22 +121,22 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "/bin/sh", "-c", "~/.config/dwm/dwmcmd.sh menu", NULL };
-static const char *termcmd[]  = { "/bin/bash" , "-c", "~/.config/dwm/run-term.sh", NULL };
-static const char *filecmd[]  = { "/bin/sh", "-c", "~/.config/dwm/dwmcmd.sh file", NULL };
-static const char *clipmancmd[] = { "/bin/sh", "-c", "~/.config/dwm/dwmcmd.sh clipman", NULL };
-static const char *lockcmd[] = { "/bin/sh", "-c", "~/.config/dwm/dwmcmd.sh lock", NULL };
-static const char *calccmd[] = { "/bin/sh", "-c", "~/.config/dwm/dwmcmd.sh calc", NULL };
-static const char *showkeyscmd[] = { "/bin/sh", "-c", "~/.config/dwm/show-keys.sh", NULL };
-static const char *bravecmd[] = { "/bin/sh", "-c", "~/.config/dwm/run-browser.sh", NULL };
-static const char *rofiwebcmd[] = { "/bin/sh", "-c", "~/.config/dwm/rofi-websites.sh", NULL };
-static const char *sysactcmd[] = { "/bin/sh", "-c", "~/.config/dwm/sysact.sh", NULL };
-static const char *shotclipcmd[] = { "/bin/sh", "-c", "~/.config/dwm/screenshot.sh clip", NULL };
-static const char *shotsavecmd[] = { "/bin/sh", "-c", "~/.config/dwm/screenshot.sh save", NULL };
-static const char *chgwallscmd[] = { "/bin/sh", "-c", "~/.config/dwm/change-wallpaper.sh", NULL };
-static const char *volupcmd[] = { "/bin/sh", "-c", "~/.config/dwm/volume.sh up", NULL };
-static const char *voldncmd[] = { "/bin/sh", "-c", "~/.config/dwm/volume.sh down", NULL };
-static const char *volmutecmd[] = { "/bin/sh", "-c", "~/.config/dwm/volume.sh mute", NULL };
+static const char *dmenucmd[] = { "/bin/sh", "-c", "dwmcmd.sh menu", NULL };
+static const char *termcmd[]  = { "/bin/bash" , "-c", "run-term.sh", NULL };
+static const char *filecmd[]  = { "/bin/sh", "-c", "dwmcmd.sh file", NULL };
+static const char *clipmancmd[] = { "/bin/sh", "-c", "dwmcmd.sh clipman", NULL };
+static const char *lockcmd[] = { "/bin/sh", "-c", "dwmcmd.sh lock", NULL };
+static const char *calccmd[] = { "/bin/sh", "-c", "dwmcmd.sh calc", NULL };
+static const char *showkeyscmd[] = { "/bin/sh", "-c", "show-keys.sh", NULL };
+static const char *bravecmd[] = { "/bin/sh", "-c", "run-browser.sh", NULL };
+static const char *rofiwebcmd[] = { "/bin/sh", "-c", "rofi-websites.sh", NULL };
+static const char *sysactcmd[] = { "/bin/sh", "-c", "sysact.sh", NULL };
+static const char *shotclipcmd[] = { "/bin/sh", "-c", "screenshot.sh clip", NULL };
+static const char *shotsavecmd[] = { "/bin/sh", "-c", "screenshot.sh save", NULL };
+static const char *chgwallscmd[] = { "/bin/sh", "-c", "change-wallpaper.sh", NULL };
+static const char *volupcmd[] = { "/bin/sh", "-c", "volume.sh up", NULL };
+static const char *voldncmd[] = { "/bin/sh", "-c", "volume.sh down", NULL };
+static const char *volmutecmd[] = { "/bin/sh", "-c", "volume.sh mute", NULL };
 
 
 /*
