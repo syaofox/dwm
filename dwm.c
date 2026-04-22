@@ -308,6 +308,9 @@ static void swapstack(const Arg *arg);
 static void zoom(const Arg *arg);
 static void load_xresources(void);
 static void resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst);
+static void reload(const Arg *arg);
+static void sigreload(int sig);
+static int reload_pending = 0;
 
 /* variables */
 static Systray *systray = NULL;
@@ -1851,9 +1854,14 @@ run(void)
 	XEvent ev;
 	/* main event loop */
 	XSync(dpy, False);
-	while (running && !XNextEvent(dpy, &ev))
+	while (running && !XNextEvent(dpy, &ev)) {
 		if (handler[ev.type])
 			handler[ev.type](&ev); /* call handler */
+		if (reload_pending) {
+			reload_pending = 0;
+			reload(NULL);
+		}
+	}
 }
 
 void
@@ -2045,6 +2053,8 @@ setup(void)
 	XSetWindowAttributes wa;
 	Atom utf8string;
 	struct sigaction sa;
+
+	signal(SIGUSR1, sigreload);
 
 	/* do not transform children into zombies when they terminate */
 	sigemptyset(&sa.sa_mask);
@@ -3132,13 +3142,50 @@ load_xresources(void)
 
 	display = XOpenDisplay(NULL);
 	resm = XResourceManagerString(display);
-	if (!resm)
+	if (!resm) {
+		XCloseDisplay(display);
 		return;
+	}
 
 	db = XrmGetStringDatabase(resm);
 	for (p = resources; p < resources + LENGTH(resources); p++)
 		resource_load(db, p->name, p->type, p->dst);
+	XrmDestroyDatabase(db);
 	XCloseDisplay(display);
+}
+
+static void
+reload(const Arg *arg)
+{
+	Client *c;
+	Monitor *m;
+	size_t i;
+
+	load_xresources();
+
+	for (i = 0; i < LENGTH(colors); i++) {
+		drw_scm_free(drw, scheme[i], 3);
+		scheme[i] = drw_scm_create(drw, colors[i], 3);
+	}
+
+	for (m = mons; m; m = m->next) {
+		XClearWindow(dpy, m->barwin);
+	}
+
+	for (c = selmon->clients; c; c = c->next) {
+		XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColBorder].pixel);
+	}
+	if (selmon->sel)
+		XSetWindowBorder(dpy, selmon->sel->win, scheme[SchemeSel][ColBorder].pixel);
+
+	drawbars();
+	arrange(NULL);
+}
+
+static void
+sigreload(int sig)
+{
+	reload_pending = 1;
 }
 
 int
