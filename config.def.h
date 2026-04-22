@@ -244,19 +244,19 @@ static const AppKey appkeys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {.i = 0} },
-	{ ClkClientWin,         MODKEY|ShiftMask, Button1,     movemouse,      {.i = 1} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkLtSymbol,          0,              Button1,        cyclelayout,    {.i = +1} },
-	{ ClkLtSymbol,          0,              Button3,        cyclelayout,    {.i = -1} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },        /* Alt+左键标签栏: 将窗口移到该标签 */
+	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },        /* Alt+右键标签栏: 切换窗口在该标签的显示状态 */
+	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },        /* 中键窗口标题: 最大化/还原窗口 */
+	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } }, /* 中键状态栏: 启动终端 */
+	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {.i = 0} },  /* Alt+左键拖拽: 移动窗口 */
+	{ ClkClientWin,         MODKEY|ShiftMask, Button1,     movemouse,      {.i = 1} },  /* Alt+Shift+左键拖拽: 交换窗口(带吸附) */
+	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },      /* Alt+中键窗口: 切换浮动/平铺 */
+	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },        /* Alt+右键拖拽: 调整窗口大小 */
+	{ ClkTagBar,            0,              Button1,        view,           {0} },        /* 左键标签栏: 切换到该标签视图 */
+	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },       /* 右键标签栏: 显示/隐藏当前窗口在该标签 */
+	{ ClkLtSymbol,          0,              Button1,        cyclelayout,    {.i = +1} },  /* 左键布局符: 切换到下一种布局 */
+	{ ClkLtSymbol,          0,              Button3,        cyclelayout,    {.i = -1} }, /* 右键布局符: 切换到上一种布局 */
+	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },        /* Alt+左键标签栏: 将窗口移到该标签(重复) */
+	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },       /* Alt+右键标签栏: 切换窗口在该标签的显示状态(重复) */
 };
 
