@@ -138,6 +138,7 @@ static const char *chgwallscmd[] = { "/bin/sh", "-c", "switch-wallpaper.sh", NUL
 static const char *volupcmd[] = { "/bin/sh", "-c", "volume.sh up", NULL };
 static const char *voldncmd[] = { "/bin/sh", "-c", "volume.sh down", NULL };
 static const char *volmutecmd[] = { "/bin/sh", "-c", "volume.sh mute", NULL };
+static const char *themecmd[] = { "/bin/sh", "-c", "switch-theme.sh", NULL };
 
 
 /*
@@ -227,6 +228,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_a,      spawn,          {.v = shotsavecmd } },
 	{ ControlMask|Mod1Mask,         XK_Delete, spawn,          {.v = sysactcmd } },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,          {.v = chgwallscmd } },
+	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = themecmd } },
 
 	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd } },
 	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = voldncmd } },
