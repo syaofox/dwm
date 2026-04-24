@@ -179,8 +179,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_i,      incnmaster,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_comma,  setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_period, setmfact,       {.f = +0.05} },
 	// { MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
@@ -188,11 +188,11 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Tab,    viewnexttag,    {.i = -1 } },
 	{ MODKEY,                       XK_grave,  swapstack,      {0} },
 	{ MODKEY,             			XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	// { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	// { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+	// { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	// { MODKEY,                       XK_space,  setlayout,      {0} },
-	// { MODKEY,                       XK_space,  cyclelayout,    {.i = +1} },
+	{ MODKEY,                       XK_n,  cyclelayout,    {.i = +1} },
 	// { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglealwaysontop, {0} },
 	{ MODKEY,			            XK_z,      togglefullscreen, {0} },
@@ -258,7 +258,5 @@ static const Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },       /* 右键标签栏: 显示/隐藏当前窗口在该标签 */
 	{ ClkLtSymbol,          0,              Button1,        cyclelayout,    {.i = +1} },  /* 左键布局符: 切换到下一种布局 */
 	{ ClkLtSymbol,          0,              Button3,        cyclelayout,    {.i = -1} }, /* 右键布局符: 切换到上一种布局 */
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },        /* Alt+左键标签栏: 将窗口移到该标签(重复) */
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },       /* Alt+右键标签栏: 切换窗口在该标签的显示状态(重复) */
 };
 
