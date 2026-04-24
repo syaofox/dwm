@@ -167,7 +167,7 @@ ResourcePref resources[] = {
 		{ "col_titlesel_bg",   STRING,  &col_titlesel_bg },
 		{ "col_titlesel_border", STRING, &col_titlesel_border },
 		{ "col_tagunderline",  STRING,  &col_tagunderline },
-		{ "tagunderline",  STRING,  &enabletagunderline },
+		{ "tagunderline",  INTEGER,  &enabletagunderline },
 
 };
 
