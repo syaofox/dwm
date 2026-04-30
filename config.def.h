@@ -130,6 +130,7 @@ static const char *lockcmd[] = { "/bin/sh", "-c", "dwmcmd.sh lock", NULL };
 static const char *calccmd[] = { "/bin/sh", "-c", "dwmcmd.sh calc", NULL };
 static const char *shotclipcmd[] = { "/bin/sh", "-c", "dwmcmd.sh clip", NULL };
 static const char *shotsavecmd[] = { "/bin/sh", "-c", "dwmcmd.sh save", NULL };
+static const char *picomcmd[] = { "/bin/sh", "-c", "dwmcmd.sh picom", NULL };
 static const char *showkeyscmd[] = { "/bin/sh", "-c", "show-keys.sh", NULL };
 static const char *bravecmd[] = { "/bin/sh", "-c", "run-browser.sh", NULL };
 static const char *rofiwebcmd[] = { "/bin/sh", "-c", "rofi-websites.sh", NULL };
@@ -229,6 +230,7 @@ static const Key keys[] = {
 	{ ControlMask|Mod1Mask,         XK_Delete, spawn,          {.v = sysactcmd } },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,          {.v = chgwallscmd } },
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = themecmd } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = picomcmd } },
 
 	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd } },
 	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = voldncmd } },
