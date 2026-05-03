@@ -91,7 +91,8 @@ static const Rule rules[] = {
 	{ "Xviewer",                    				NULL,       								NULL,				0,            1,           1,            1,           -1 },
 	{ "Xfce4-clipman-history",                    	"xfce4-clipman-history",       				NULL,				0,            1,           1,            1,           -1 },
 	{ "org.gnome.FileRoller",                    	"org.gnome.FileRoller",       				NULL,				0,            1,           1,            1,           -1 },
-	{ "zenity",                    					"zenity",       							NULL,				0,            1,           1,            1,           -1 }
+	{ "zenity",                    					"zenity",       							NULL,				0,            1,           1,            1,           -1 },
+	{ "yazi-float",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1 }
 };
 
 /* layout(s) */
