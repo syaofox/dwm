@@ -119,28 +119,28 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/bash", "-c", cmd, NULL } }
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "/bin/sh", "-c", "dwmcmd.sh menu", NULL };
+static const char *dmenucmd[] = { "/bin/bash", "-c", "dwmcmd.sh menu", NULL };
 static const char *termcmd[]  = { "/bin/bash" , "-c", "dwmcmd.sh term", NULL };
-static const char *filecmd[]  = { "/bin/sh", "-c", "dwmcmd.sh file", NULL };
-static const char *clipmancmd[] = { "/bin/sh", "-c", "dwmcmd.sh clipman", NULL };
-static const char *lockcmd[] = { "/bin/sh", "-c", "dwmcmd.sh lock", NULL };
-static const char *calccmd[] = { "/bin/sh", "-c", "dwmcmd.sh calc", NULL };
-static const char *shotclipcmd[] = { "/bin/sh", "-c", "dwmcmd.sh clip", NULL };
-static const char *shotsavecmd[] = { "/bin/sh", "-c", "dwmcmd.sh save", NULL };
-static const char *picomcmd[] = { "/bin/sh", "-c", "dwmcmd.sh picom", NULL };
-static const char *showkeyscmd[] = { "/bin/sh", "-c", "show-keys.sh", NULL };
-static const char *bravecmd[] = { "/bin/sh", "-c", "run-browser.sh", NULL };
-static const char *rofiwebcmd[] = { "/bin/sh", "-c", "rofi-websites.sh", NULL };
-static const char *sysactcmd[] = { "/bin/sh", "-c", "rofi-sysact.sh", NULL };
-static const char *chgwallscmd[] = { "/bin/sh", "-c", "switch-wallpaper.sh", NULL };
-static const char *volupcmd[] = { "/bin/sh", "-c", "volume.sh up", NULL };
-static const char *voldncmd[] = { "/bin/sh", "-c", "volume.sh down", NULL };
-static const char *volmutecmd[] = { "/bin/sh", "-c", "volume.sh mute", NULL };
-static const char *themecmd[] = { "/bin/sh", "-c", "switch-theme.sh", NULL };
+static const char *filecmd[]  = { "/bin/bash", "-c", "dwmcmd.sh file", NULL };
+static const char *yazicmd[]  = { "/bin/bash", "-c", "dwmcmd.sh yazi", NULL };
+static const char *clipmancmd[] = { "/bin/bash", "-c", "dwmcmd.sh clipman", NULL };
+static const char *lockcmd[] = { "/bin/bash", "-c", "dwmcmd.sh lock", NULL };
+static const char *calccmd[] = { "/bin/bash", "-c", "dwmcmd.sh calc", NULL };
+static const char *shotclipcmd[] = { "/bin/bash", "-c", "dwmcmd.sh clip", NULL };
+static const char *shotsavecmd[] = { "/bin/bash", "-c", "dwmcmd.sh clipsave", NULL };
+static const char *showkeyscmd[] = { "/bin/bash", "-c", "show-keys.sh", NULL };
+static const char *bravecmd[] = { "/bin/bash", "-c", "run-browser.sh", NULL };
+static const char *rofiwebcmd[] = { "/bin/bash", "-c", "rofi-websites.sh", NULL };
+static const char *sysactcmd[] = { "/bin/bash", "-c", "rofi-sysact.sh", NULL };
+static const char *chgwallscmd[] = { "/bin/bash", "-c", "switch-wallpaper.sh", NULL };
+static const char *volupcmd[] = { "/bin/bash", "-c", "volume.sh up", NULL };
+static const char *voldncmd[] = { "/bin/bash", "-c", "volume.sh down", NULL };
+static const char *volmutecmd[] = { "/bin/bash", "-c", "volume.sh mute", NULL };
+static const char *themecmd[] = { "/bin/bash", "-c", "switch-theme.sh", NULL };
 
 
 /*
@@ -219,7 +219,8 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
-	{ MODKEY,                       XK_e,      spawn,          {.v = filecmd } },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = filecmd } },
+	{ MODKEY,                       XK_e,      spawn,          {.v = yazicmd } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = clipmancmd } },
 	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = calccmd } },
@@ -231,7 +232,6 @@ static const Key keys[] = {
 	{ ControlMask|Mod1Mask,         XK_Delete, spawn,          {.v = sysactcmd } },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,          {.v = chgwallscmd } },
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = themecmd } },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = picomcmd } },
 
 	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd } },
 	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = voldncmd } },
