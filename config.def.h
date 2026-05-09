@@ -86,12 +86,12 @@ static const Rule rules[] = {
 	/* class      									instance    								title				tags mask     isfloating   iscentered   isalwaysontop   monitor */
 	{ "FreeFileSync",               				NULL,                   					NULL,				1 << 8, 	  0,           0,            0,           -1 },
 	{ "Localsend",                  				"localsend",            					NULL,				1 << 8, 	  0,           0,            0,           -1 },
-	{ "mpv",                        				NULL,       								NULL,				0,            1,           1,            1,           -1 },
-	{ "Io.github.celluloid_player.Celluloid",       "io.github.celluloid_player.Celluloid",     NULL,				0,            1,           1,            1,           -1 },
-	{ "Xviewer",                    				NULL,       								NULL,				0,            1,           1,            1,           -1 },
-	{ "Xfce4-clipman-history",                    	"xfce4-clipman-history",       				NULL,				0,            1,           1,            1,           -1 },
-	{ "org.gnome.FileRoller",                    	"org.gnome.FileRoller",       				NULL,				0,            1,           1,            1,           -1 },
-	{ "zenity",                    					"zenity",       							NULL,				0,            1,           1,            1,           -1 },
+	{ "mpv",                        				NULL,       								NULL,				0,            1,           1,            0,           -1 },
+	{ "Io.github.celluloid_player.Celluloid",       "io.github.celluloid_player.Celluloid",     NULL,				0,            1,           1,            0,           -1 },
+	{ "Xviewer",                    				NULL,       								NULL,				0,            1,           1,            0,           -1 },
+	{ "Xfce4-clipman-history",                    	"xfce4-clipman-history",       				NULL,				0,            1,           1,            0,           -1 },
+	{ "org.gnome.FileRoller",                    	"org.gnome.FileRoller",       				NULL,				0,            1,           1,            0,           -1 },
+	{ "zenity",                    					"zenity",       							NULL,				0,            1,           1,            0,           -1 },
 	{ "yazi-float",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1 },
 	{ "wallpick",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1 }
 };
