@@ -111,6 +111,7 @@ struct Client {
 	int bw, oldbw;
 	unsigned int tags;
 	int isfixed, iscentered, isfloating, isalwaysontop, isurgent, neverfocus, oldstate, isfullscreen;
+	float wfactor, hfactor;
 	Client *next;
 	Client *snext;
 	Monitor *mon;
@@ -174,6 +175,8 @@ typedef struct {
 	int iscentered;
 	int isalwaysontop;
 	int monitor;
+	float wfactor;
+	float hfactor;
 } Rule;
 
 /* Xresources preferences */
@@ -392,6 +395,8 @@ applyrules(Client *c)
 			c->iscentered = r->iscentered;
 			c->isalwaysontop = r->isalwaysontop;
 			c->tags |= r->tags;
+			c->wfactor = r->wfactor;
+			c->hfactor = r->hfactor;
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
 				c->mon = m;
@@ -1417,6 +1422,10 @@ manage(Window w, XWindowAttributes *wa)
 	updatewindowtype(c);
 	updatesizehints(c);
 	updatewmhints(c);
+	if (c->isfloating && c->wfactor > 0 && c->hfactor > 0) {
+		c->w = c->mon->mw * c->wfactor;
+		c->h = c->mon->mh * c->hfactor;
+	}
 	if(c->iscentered) {
 		c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
 		c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
