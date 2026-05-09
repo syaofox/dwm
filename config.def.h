@@ -92,7 +92,7 @@ static const Rule rules[] = {
 	{ "Xfce4-clipman-history",                    	"xfce4-clipman-history",       				NULL,				0,            1,           1,            0,           -1,        0,        0 },
 	{ "org.gnome.FileRoller",                    	"org.gnome.FileRoller",       				NULL,				0,            1,           1,            0,           -1,        0,        0 },
 	{ "zenity",                    					"zenity",       							NULL,				0,            1,           1,            0,           -1,        0,        0 },
-	{ "yazi-float",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.7,      0.7 },
+	{ "yazi-float",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.5,      0.7 },
 	{ "wallpick",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1,        0,        0 }
 };
 
