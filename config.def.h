@@ -136,12 +136,12 @@ static const char *shotsavecmd[] = { "/bin/bash", "-c", "dwmcmd.sh clipsave", NU
 static const char *showkeyscmd[] = { "/bin/bash", "-c", "show-keys.sh", NULL };
 static const char *bravecmd[] = { "/bin/bash", "-c", "run-browser.sh", NULL };
 static const char *rofiwebcmd[] = { "/bin/bash", "-c", "rofi-websites.sh", NULL };
-static const char *sysactcmd[] = { "/bin/bash", "-c", "rofi-sysact.sh", NULL };
 static const char *chgwallscmd[] = { "/bin/bash", "-c", "switch-wallpaper.sh", NULL };
 static const char *volupcmd[] = { "/bin/bash", "-c", "volume.sh up", NULL };
 static const char *voldncmd[] = { "/bin/bash", "-c", "volume.sh down", NULL };
 static const char *volmutecmd[] = { "/bin/bash", "-c", "volume.sh mute", NULL };
 static const char *themecmd[] = { "/bin/bash", "-c", "switch-theme.sh", NULL };
+static const char *sysmenucmd[] = { "sysmenu", NULL };
 
 
 /*
@@ -230,7 +230,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_s,      spawn,          {.v = rofiwebcmd } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = shotclipcmd } },
 	{ MODKEY|ShiftMask,             XK_a,      spawn,          {.v = shotsavecmd } },
-	{ ControlMask|Mod1Mask,         XK_Delete, spawn,          {.v = sysactcmd } },
+	{ ControlMask|Mod1Mask,         XK_Delete, spawn,          {.v = sysmenucmd } },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,          {.v = chgwallscmd } },
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = themecmd } },
 
