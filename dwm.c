@@ -104,6 +104,7 @@ typedef struct Monitor Monitor;
 typedef struct Client Client;
 struct Client {
 	char name[256];
+	char class[256];
 	float mina, maxa;
 	int x, y, w, h;
 	int oldx, oldy, oldw, oldh;
@@ -385,6 +386,8 @@ applyrules(Client *c)
 	class    = ch.res_class ? ch.res_class : broken;
 	instance = ch.res_name  ? ch.res_name  : broken;
 
+	strcpy(c->class, (ch.res_class && ch.res_class[0]) ? ch.res_class : broken);
+
 	for (i = 0; i < LENGTH(rules); i++) {
 		r = &rules[i];
 		if ((!r->title || strstr(c->name, r->title))
@@ -524,6 +527,22 @@ attachstack(Client *c)
 	c->mon->stack = c;
 }
 
+const char *
+tagicon(Monitor *m, int tag)
+{
+	Client *c;
+	if (!enabletagicons)
+		return tags[tag];
+	for (c = m->clients; c; c = c->next)
+		if (c->tags & 1 << tag) {
+			for (int i = 0; tagicons[i].class; i++)
+				if (!strcmp(c->class, tagicons[i].class))
+					return tagicons[i].icon;
+			return tagicondefault;
+		}
+	return tags[tag];
+}
+
 void
 buttonpress(XEvent *e)
 {
@@ -543,7 +562,7 @@ buttonpress(XEvent *e)
 	if (ev->window == selmon->barwin) {
 		i = x = 0;
 		do
-			x += TEXTW(tags[i]);
+			x += TEXTW(tagicon(selmon, i));
 		while (ev->x >= x && ++i < LENGTH(tags));
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
@@ -999,7 +1018,8 @@ drawbar(Monitor *m)
 	x = 0;
 	drw_setfontset(drw, drw->tagfonts);
 	for (i = 0; i < LENGTH(tags); i++) {
-		w = TEXTW(tags[i]);
+		const char *taglabel = tagicon(m, i);
+		w = TEXTW(taglabel);
 		int is_selected = m->tagset[m->seltags] & 1 << i;
 		int is_occupied = occ & 1 << i;
 
@@ -1012,7 +1032,7 @@ drawbar(Monitor *m)
 		else
 			drw_setscheme(drw, scheme[SchemeNorm]);
 
-		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+		drw_text(drw, x, 0, w, bh, lrpad / 2, taglabel, urg & 1 << i);
 
 		if (is_selected && enabletagunderline) {
 			drw_setscheme(drw, scheme[SchemeTagUnderline]);

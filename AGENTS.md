@@ -3,6 +3,7 @@
 ## RESPONSES
 
 - Keep responses concise and to the point - unless the user asks otherwise
+- 用中文和用户交流
 
 ## PLANNING MODE
 

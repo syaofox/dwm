@@ -58,6 +58,7 @@ static char col_titlesel_bg[]    		= "#005577";
 static char col_titlesel_border[] 		= "#222222";
 
 static int enabletagunderline 			= 1;
+static int enabletagicons   			= 0;
 static char col_tagunderline[]   		= "#d488d6";
 
 static const unsigned int tagunderlinepadding = 4;
@@ -77,6 +78,34 @@ static char *colors[][3]      = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
+/* nerd font icon mapping for tag area */
+static const char *tagicondefault = "\uf2d2";  /* nf-fa-window_restore */
+static const struct { char *class; char *icon; } tagicons[] = {
+	/* from rules[] entries */
+	{ "FreeFileSync",                     		"" },   /* nf-fa-exchange */
+	{ "Localsend",                        		"" },   /* nf-fa-send_o */
+	{ "mpv",                              		"" },   /* nf-fa-play_circle_o */
+	{ "Io.github.celluloid_player.Celluloid", 	"" },   /* nf-fa-play_circle_o */
+	{ "Xviewer",                          		"" },   /* nf-fa-picture_o */
+	{ "Xfce4-clipman-history",            		"" },   /* nf-fa-clipboard */
+	{ "org.gnome.FileRoller",             		"" },   /* nf-fa-file_archive_o */
+	{ "zenity",                           		"" },   /* nf-fa-window_maximize */
+	{ "yazi-float",                       		"󰇥" },   /* nf-fa-folder */
+	{ "wallpick",                         		"" },   /* nf-fa-picture_o */
+	/* common apps */
+	{ "kitty",                        	  		"" },   /* nf-dev-terminal */
+	{ "Firefox",                          		"" },   /* nf-fa-firefox */
+	{ "Brave-browser",                    		"" },   /* nf-fa-chrome */
+	{ "Brave-origin-nightly",             		"" },   /* nf-fa-chrome */
+	{ "Nemo",                             		"" },   /* nf-fa-folder */
+	{ "Google-chrome",                    		"" },   /* nf-fa-chrome */
+	{ "Code",                             		"" },   /* nf-fa-code */
+	{ "code-oss",                         		"" },   /* nf-fa-code */
+	{ "Timeshift-gtk",                         	"" },   /* nf-fa-business_time */
+	{ "tdxcfv",                         		"󰠟" },   /* nf-md-finance */
+	{ NULL, NULL },  /* sentinel */
+};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -169,8 +198,9 @@ ResourcePref resources[] = {
 		{ "col_titlesel_fg",   STRING,  &col_titlesel_fg },
 		{ "col_titlesel_bg",   STRING,  &col_titlesel_bg },
 		{ "col_titlesel_border", STRING, &col_titlesel_border },
-		{ "col_tagunderline",  STRING,  &col_tagunderline },
-		{ "tagunderline",  INTEGER,  &enabletagunderline },
+	{ "col_tagunderline",  STRING,  &col_tagunderline },
+	{ "tagunderline",  INTEGER,  &enabletagunderline },
+	{ "tagicons",  INTEGER,  &enabletagicons },
 
 };
 
