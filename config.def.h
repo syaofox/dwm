@@ -104,6 +104,7 @@ static const struct { char *class; char *icon; } tagicons[] = {
 	{ "code-oss",                         		"" },   /* nf-fa-code */
 	{ "Timeshift-gtk",                         	"" },   /* nf-fa-business_time */
 	{ "tdxcfv",                         		"󰠟" },   /* nf-md-finance */
+	{ "Virt-manager",                         	"󰒍" },   /* nf-md-server */
 	{ NULL, NULL },  /* sentinel */
 };
 
@@ -115,6 +116,8 @@ static const Rule rules[] = {
 	/* class      									instance    								title				tags mask     isfloating   iscentered   isalwaysontop   monitor   wfactor   hfactor */
 	{ "FreeFileSync",               				NULL,                   					NULL,				1 << 8, 	  0,           0,            0,           -1,        0,        0 },
 	{ "Localsend",                  				"localsend",            					NULL,				1 << 8, 	  0,           0,            0,           -1,        0,        0 },
+	{ "Virt-manager",                  				"virt-manager",            					NULL,				1 << 7, 	  0,           0,            0,           -1,        0,        0 },
+	{ "Virt-manager",                  				"virt-manager",            					NULL,				1 << 7, 	  0,           0,            0,           -1,        0,        0 },
 	{ "mpv",                        				NULL,       								NULL,				0,            1,           1,            0,           -1,        0,        0 },
 	{ "Io.github.celluloid_player.Celluloid",       "io.github.celluloid_player.Celluloid",     NULL,				0,            1,           1,            0,           -1,        0,        0 },
 	{ "Xviewer",                    				NULL,       								NULL,				0,            1,           1,            0,           -1,        0,        0 },
