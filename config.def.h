@@ -125,7 +125,8 @@ static const Rule rules[] = {
 	{ "org.gnome.FileRoller",                    	"org.gnome.FileRoller",       				NULL,				0,            1,           1,            0,           -1,        0,        0 },
 	{ "zenity",                    					"zenity",       							NULL,				0,            1,           1,            0,           -1,        0,        0 },
 	{ "yazi-float",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.5,      0.7 },
-	{ "wallpick",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1,        0,        0 }
+	{ "wallpick",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1,        0,        0 },
+	{ "Qalculate-gtk",                    			NULL,       							    NULL,				0,            1,           1,            0,           -1,        0,        0 }
 };
 
 /* layout(s) */
