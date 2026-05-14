@@ -105,6 +105,7 @@ static const struct { char *class; char *icon; } tagicons[] = {
 	{ "Timeshift-gtk",                         	"" },   /* nf-fa-business_time */
 	{ "tdxcfv",                         		"󰠟" },   /* nf-md-finance */
 	{ "Virt-manager",                         	"󰒍" },   /* nf-md-server */
+	{ "lazydocker-float",                      "" },   /* nf-fa-docker */
 	{ NULL, NULL },  /* sentinel */
 };
 
@@ -117,7 +118,6 @@ static const Rule rules[] = {
 	{ "FreeFileSync",               				NULL,                   					NULL,				1 << 8, 	  0,           0,            0,           -1,        0,        0 },
 	{ "Localsend",                  				"localsend",            					NULL,				1 << 8, 	  0,           0,            0,           -1,        0,        0 },
 	{ "Virt-manager",                  				"virt-manager",            					NULL,				1 << 7, 	  0,           0,            0,           -1,        0,        0 },
-	{ "Virt-manager",                  				"virt-manager",            					NULL,				1 << 7, 	  0,           0,            0,           -1,        0,        0 },
 	{ "mpv",                        				NULL,       								NULL,				0,            1,           1,            0,           -1,        0,        0 },
 	{ "Io.github.celluloid_player.Celluloid",       "io.github.celluloid_player.Celluloid",     NULL,				0,            1,           1,            0,           -1,        0,        0 },
 	{ "Xviewer",                    				NULL,       								NULL,				0,            1,           1,            0,           -1,        0,        0 },
@@ -126,7 +126,9 @@ static const Rule rules[] = {
 	{ "zenity",                    					"zenity",       							NULL,				0,            1,           1,            0,           -1,        0,        0 },
 	{ "yazi-float",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.5,      0.7 },
 	{ "wallpick",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1,        0,        0 },
-	{ "Qalculate-gtk",                    			NULL,       							    NULL,				0,            1,           1,            0,           -1,        0,        0 }
+	{ "Qalculate-gtk",                    			NULL,       							    NULL,				0,            1,           1,            0,           -1,        0,        0 },
+	{ "lazydocker-float",                    		NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.5,      0.7 },
+
 };
 
 /* layout(s) */
@@ -175,7 +177,7 @@ static const char *voldncmd[] = { "/bin/bash", "-c", "volume.sh down", NULL };
 static const char *volmutecmd[] = { "/bin/bash", "-c", "volume.sh mute", NULL };
 static const char *themecmd[] = { "/bin/bash", "-c", "switch-theme.sh", NULL };
 static const char *sysmenucmd[] = { "sysmenu", NULL };
-
+static const char *lazydockercmd[]  = { "/bin/bash", "-c", "dwmcmd.sh lazydocker", NULL };
 
 /*
  * Xresources preferences to load at startup
@@ -256,6 +258,7 @@ static const Key keys[] = {
 
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = filecmd } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = yazicmd } },
+	{ MODKEY,                       XK_d,      spawn,          {.v = lazydockercmd } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = clipmancmd } },
 	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = calccmd } },
