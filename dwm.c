@@ -36,6 +36,7 @@
 #include <X11/XF86keysym.h>
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
+#include <X11/XKBlib.h>
 #include <X11/Xproto.h>
 #include <X11/Xutil.h>
 #include <X11/Xresource.h>
@@ -191,6 +192,7 @@ typedef struct {
 	char *name;
 	enum resource_type type;
 	void *dst;
+	size_t dstsize;
 } ResourcePref;
 
 typedef struct Systray   Systray;
@@ -314,10 +316,11 @@ static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void swapstack(const Arg *arg);
 static void zoom(const Arg *arg);
 static void load_xresources(void);
-static void resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst);
+static void resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst, size_t dstsize);
 static void reload(const Arg *arg);
 static void sigreload(int sig);
-static int reload_pending = 0;
+static volatile sig_atomic_t reload_pending = 0;
+static int monitor_count_cache = -1;
 
 /* variables */
 static Systray *systray = NULL;
@@ -386,7 +389,8 @@ applyrules(Client *c)
 	class    = ch.res_class ? ch.res_class : broken;
 	instance = ch.res_name  ? ch.res_name  : broken;
 
-	strcpy(c->class, (ch.res_class && ch.res_class[0]) ? ch.res_class : broken);
+	strncpy(c->class, (ch.res_class && ch.res_class[0]) ? ch.res_class : broken, sizeof(c->class));
+	c->class[sizeof(c->class) - 1] = '\0';
 
 	for (i = 0; i < LENGTH(rules); i++) {
 		r = &rules[i];
@@ -498,6 +502,7 @@ void
 arrangemon(Monitor *m)
 {
 	strncpy(m->ltsymbol, m->lt[m->sellt]->symbol, sizeof m->ltsymbol);
+	m->ltsymbol[sizeof(m->ltsymbol) - 1] = '\0';
 	if (m->lt[m->sellt]->arrange)
 		m->lt[m->sellt]->arrange(m);
 }
@@ -835,6 +840,7 @@ createmon(void)
 	m->lt[0] = &layouts[0];
 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
+	m->ltsymbol[sizeof(m->ltsymbol) - 1] = '\0';
 	return m;
 }
 
@@ -954,16 +960,20 @@ drawstatusbar(Monitor *m, char *stext)
 			while (text[++i] != '^') {
 				if (text[i] == 'c') {
 					char buf[8];
-					memcpy(buf, (char*)text+i+1, 7);
-					buf[7] = '\0';
-					drw_clr_create(drw, &drw->scheme[ColFg], buf);
-					i += 7;
+					if (strlen(text + i + 1) >= 7) {
+						memcpy(buf, (char*)text+i+1, 7);
+						buf[7] = '\0';
+						drw_clr_create(drw, &drw->scheme[ColFg], buf);
+						i += 7;
+					}
 				} else if (text[i] == 'b') {
 					char buf[8];
-					memcpy(buf, (char*)text+i+1, 7);
-					buf[7] = '\0';
-					drw_clr_create(drw, &drw->scheme[ColBg], buf);
-					i += 7;
+					if (strlen(text + i + 1) >= 7) {
+						memcpy(buf, (char*)text+i+1, 7);
+						buf[7] = '\0';
+						drw_clr_create(drw, &drw->scheme[ColBg], buf);
+						i += 7;
+					}
 				} else if (text[i] == 'd') {
 					drw->scheme[ColFg] = scheme[SchemeStatus][ColFg];
 					drw->scheme[ColBg] = scheme[SchemeStatus][ColBg];
@@ -1211,11 +1221,11 @@ getatomprop(Client *c, Atom prop)
 int
 getrootptr(int *x, int *y)
 {
-	int di;
+	int di_x, di_y;
 	unsigned int dui;
 	Window dummy;
 
-	return XQueryPointer(dpy, root, &dummy, &dummy, x, y, &di, &di, &dui);
+	return XQueryPointer(dpy, root, &dummy, &dummy, x, y, &di_x, &di_y, &dui);
 }
 
 long
@@ -1345,7 +1355,7 @@ keypress(XEvent *e)
 	XKeyEvent *ev;
 
 	ev = &e->xkey;
-	keysym = XKeycodeToKeysym(dpy, (KeyCode)ev->keycode, 0);
+	keysym = XkbKeycodeToKeysym(dpy, (KeyCode)ev->keycode, 0, 0);
 	for (i = 0; i < LENGTH(keys); i++)
 		if (keysym == keys[i].keysym
 		&& CLEANMASK(keys[i].mod) == CLEANMASK(ev->state)
@@ -1518,18 +1528,26 @@ monocle(Monitor *m)
 void
 motionnotify(XEvent *e)
 {
-	static Monitor *mon = NULL;
-	Monitor *m;
+	static Monitor *last_mon = NULL;
+	int nmon = 0;
+	Monitor *m, *tmp;
 	XMotionEvent *ev = &e->xmotion;
 
 	if (ev->window != root)
 		return;
-	if ((m = recttomon(ev->x_root, ev->y_root, 1, 1)) != mon && mon) {
+	for (tmp = mons; tmp; tmp = tmp->next)
+		nmon++;
+	if (monitor_count_cache != nmon) {
+		monitor_count_cache = nmon;
+		last_mon = NULL;
+	}
+	m = recttomon(ev->x_root, ev->y_root, 1, 1);
+	if (m != last_mon && last_mon) {
 		unfocus(selmon->sel, 1);
 		selmon = m;
 		focus(NULL);
 	}
-	mon = m;
+	last_mon = m;
 }
 
 void
@@ -1604,26 +1622,29 @@ movemouse(const Arg *arg)
 					}
 
 					if (cc) {
-						Client *cl1, *cl2, ocl1;
+						Client *cl1, *cl2;
+						Client *cl1_next, *cl1_snext;
+						Client *cl2_next, *cl2_snext;
+						Client tmp;
 
 						if (!selmon->lt[selmon->sellt]->arrange) return;
 
 						cl1 = c;
 						cl2 = cc;
-						ocl1 = *cl1;
-						strcpy(cl1->name, cl2->name);
-						cl1->win = cl2->win;
-						cl1->x = cl2->x;
-						cl1->y = cl2->y;
-						cl1->w = cl2->w;
-						cl1->h = cl2->h;
 
-						cl2->win = ocl1.win;
-						strcpy(cl2->name, ocl1.name);
-						cl2->x = ocl1.x;
-						cl2->y = ocl1.y;
-						cl2->w = ocl1.w;
-						cl2->h = ocl1.h;
+						cl1_next = cl1->next;
+						cl1_snext = cl1->snext;
+						cl2_next = cl2->next;
+						cl2_snext = cl2->snext;
+
+						tmp = *cl1;
+						*cl1 = *cl2;
+						*cl2 = tmp;
+
+						cl1->next = cl1_next;
+						cl1->snext = cl1_snext;
+						cl2->next = cl2_next;
+						cl2->snext = cl2_snext;
 
 						selmon->sel = cl2;
 						c = cc;
@@ -1959,6 +1980,7 @@ runautostart(void)
 	if (sprintf(path, "%s/%s", pathpfx, autostartblocksh) <= 0) {
 		free(path);
 		free(pathpfx);
+		return;
 	}
 
 	if (access(path, X_OK) == 0) {
@@ -1967,13 +1989,17 @@ runautostart(void)
 	}
 
 	/* now the non-blocking script */
+	free(path);
+	path = ecalloc(1, strlen(pathpfx) + strlen(autostartsh) + 5);
 	if (sprintf(path, "%s/%s", pathpfx, autostartsh) <= 0) {
 		free(path);
 		free(pathpfx);
+		return;
 	}
 
 	if (access(path, X_OK) == 0) {
-		if (system(strcat(path, " &")) == -1)
+		strcat(path, " &");
+		if (system(path) == -1)
 			fprintf(stderr, "dwm: autostart command failed\n");
 	}
 
@@ -2138,6 +2164,7 @@ setlayout(const Arg *arg)
 	if (arg && arg->v)
 		selmon->lt[selmon->sellt] = (Layout *)arg->v;
 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
+	selmon->ltsymbol[sizeof(selmon->ltsymbol) - 1] = '\0';
 	if (selmon->sel)
 		arrange(selmon);
 	else
@@ -3119,7 +3146,7 @@ Client *
 wintosystrayicon(Window w) {
 	Client *i = NULL;
 
-	if (!showsystray || !w)
+	if (!showsystray || !w || !systray)
 		return i;
 	for (i = systray->icons; i && i->win != w; i = i->next) ;
 	return i;
@@ -3244,7 +3271,7 @@ swapstack(const Arg *arg)
 }
 
 void
-resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst)
+resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst, size_t dstsize)
 {
 	char *sdst = NULL;
 	int *idst = NULL;
@@ -3266,7 +3293,10 @@ resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst)
 	{
 		switch (rtype) {
 		case STRING:
-			strcpy(sdst, ret.addr);
+			if (dstsize > 0) {
+				strncpy(sdst, ret.addr, dstsize - 1);
+				sdst[dstsize - 1] = '\0';
+			}
 			break;
 		case INTEGER:
 			*idst = strtoul(ret.addr, NULL, 10);
@@ -3295,7 +3325,7 @@ load_xresources(void)
 
 	db = XrmGetStringDatabase(resm);
 	for (p = resources; p < resources + LENGTH(resources); p++)
-		resource_load(db, p->name, p->type, p->dst);
+		resource_load(db, p->name, p->type, p->dst, p->dstsize);
 	XrmDestroyDatabase(db);
 	XCloseDisplay(display);
 }
