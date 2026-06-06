@@ -102,10 +102,11 @@ static const struct { char *class; char *icon; } tagicons[] = {
 	{ "Google-chrome",                    		"" },   /* nf-fa-chrome */
 	{ "Code",                             		"" },   /* nf-fa-code */
 	{ "code-oss",                         		"" },   /* nf-fa-code */
+	{ "code",                         		    "" },   /* nf-fa-code */
 	{ "Timeshift-gtk",                         	"" },   /* nf-fa-business_time */
 	{ "tdxcfv",                         		"󰠟" },   /* nf-md-finance */
 	{ "Virt-manager",                         	"󰒍" },   /* nf-md-server */
-	{ "lazydocker-float",                      "" },   /* nf-fa-docker */
+	{ "lazydocker-float",                       "" },   /* nf-fa-docker */
 	{ NULL, NULL },  /* sentinel */
 };
 
