@@ -128,7 +128,8 @@ static const Rule rules[] = {
 	{ "wallpick",                    				NULL,       							    NULL,				0,            1,           1,            0,           -1,        0,        0 },
 	{ "Qalculate-gtk",                    			NULL,       							    NULL,				0,            1,           1,            0,           -1,        0,        0 },
 	{ "lazydocker-float",                    		NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.5,      0.7 },
-
+	{ "Cropgui",                      		        NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.5,      0.7 },
+	{ "Bulky.py",                      		        NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.5,      0.7 },
 };
 
 /* layout(s) */
