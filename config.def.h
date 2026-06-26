@@ -100,6 +100,7 @@ static const struct { char *class; char *icon; } tagicons[] = {
 	{ "Brave-origin-nightly",             		"" },   /* nf-fa-chrome */
 	{ "Nemo",                             		"" },   /* nf-fa-folder */
 	{ "Google-chrome",                    		"" },   /* nf-fa-chrome */
+	{ "Chromium",                    		    "" },   /* nf-fa-chrome */
 	{ "Code",                             		"" },   /* nf-fa-code */
 	{ "code-oss",                         		"" },   /* nf-fa-code */
 	{ "code",                         		    "" },   /* nf-fa-code */
