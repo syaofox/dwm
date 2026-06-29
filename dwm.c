@@ -566,9 +566,11 @@ buttonpress(XEvent *e)
 	}
 	if (ev->window == selmon->barwin) {
 		i = x = 0;
+		drw_setfontset(drw, drw->tagfonts);
 		do
 			x += TEXTW(tagicon(selmon, i));
 		while (ev->x >= x && ++i < LENGTH(tags));
+		drw_setfontset(drw, drw->fonts);
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
