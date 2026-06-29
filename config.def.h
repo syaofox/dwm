@@ -132,6 +132,8 @@ static const Rule rules[] = {
 	{ "lazydocker-float",                    		NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.5,      0.7 },
 	{ "Cropgui",                      		        NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.5,      0.7 },
 	{ "Bulky.py",                      		        NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.5,      0.7 },
+	{ "Org.gnome.gThumb",                      		NULL,       							    NULL,				0,            1,           1,            0,           -1,        0.5,      0.7 },
+
 };
 
 /* layout(s) */
