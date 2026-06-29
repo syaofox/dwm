@@ -285,6 +285,7 @@ static const AppKey appkeys[] = {
     /* class                                    instance                  				title                 modifier 		key			function           argument */
     { "Io.github.celluloid_player.Celluloid", 	"io.github.celluloid_player.Celluloid", NULL,                 0,         	XK_q,       killclient,        {0} },
     { "Xviewer",                                "xviewer",                      		NULL,                 0,          	XK_q,       killclient,        {0} },
+	{ "Org.gnome.gThumb",                       "org.gnome.gThumb",                     NULL,                 0,          	XK_q,       killclient,        {0} },
 };
 
 /* button definitions */
